@@ -165,7 +165,7 @@ export default function Home() {
                 {stages.slice(5).map((stage) => <option value={stage.day} key={stage.day}>Tag {stage.day} · {stage.route}</option>)}
               </optgroup>
             </select>
-            <div className="rest-break"><span>09–13 Sep</span><strong>Briançon Basecamp</strong><small>Fünf Pausentage zwischen Tag 5 und 6. Zwei optionale Nebenquests: Granon oder Finestre — beide freiwillig.</small></div>
+            <div className="rest-break"><span>09–13 Sep</span><strong>Briançon Basecamp</strong><small>Fünf Pausentage zwischen Tag 5 und 6. Granon und Finestre sind zwei Optionen für die Zeit dort.</small></div>
           </div>
           <article className={`stage-detail ${selectedStage.tone === "warm" ? "is-warm" : ""}`}>
             <div className="stage-detail-top"><span>TAG {String(selectedStage.day).padStart(2, "0")}</span><small>{selectedStage.date}</small></div>
@@ -179,7 +179,7 @@ export default function Home() {
 
       <section className="basecamp-section" id="briancon">
         <div className="shell">
-          <div className="section-heading basecamp-heading"><div><p className="eyebrow">03 · Briançon Basecamp</p><h2>Pause heißt nicht<br /><em>Pflichtprogramm.</em></h2></div><p className="section-copy">Fünf Tage ohne Gepäck und ohne Zeitdruck. Es gibt Sauna, Pasta und Spaziergänge — oder zwei sehr unterschiedliche Ideen, die Beine erneut zu beleidigen.</p></div>
+          <div className="section-heading basecamp-heading"><div><p className="eyebrow">03 · Briançon Basecamp</p><h2>Optionen für<br /><em>die Zeit dort.</em></h2></div><p className="section-copy">Fünf Tage ohne Gepäck und ohne Zeitdruck. Granon und Finestre sind zwei sehr unterschiedliche Ausfahrten direkt ab Briançon.</p></div>
           <div className="basecamp-layout">
             <div className="basecamp-selector">
               <label htmlFor="basecamp-ride-select">Option auswählen</label>
