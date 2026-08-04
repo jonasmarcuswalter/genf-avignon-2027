@@ -26,6 +26,8 @@ type Col = {
   url: string;
 };
 
+const komootUrl = "https://www.komoot.com/de-de/tour/3168160179?share_token=abVzeXcWdamobmQ3OkvlriMsbYu5lKUeHb5WmCa7qWVoBz6zU4&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=1472812756621";
+
 const stages: Stage[] = [
   { day: 1, date: "Sa · 04 Sep", route: "Genf → Albertville", stop: "Albertville", km: 88, gain: 1025, cols: ["Col de Tamié"], booking: "Große Auswahl: Hotels, Restaurants, Versorgung.", coordinates: [45.66911, 6.39008] },
   { day: 2, date: "So · 05 Sep", route: "Albertville → Saint-Colomban", stop: "Saint-Colomban-des-Villards", km: 74, gain: 2302, cols: ["Col de la Madeleine", "Glandon beginnt"], booking: "Kleine Auswahl – die Übernachtung früh sichern.", coordinates: [45.29370, 6.22591] },
@@ -78,7 +80,7 @@ export default function Home() {
             <p className="eyebrow">Rennrad-Bikepacking · Frankreich</p>
             <h1>Genf<br /><em>→</em> Avignon</h1>
             <p className="hero-lead">Ein Straßenband durch die französischen Alpen. Zehn Tage fahren, fünf Tage Briançon, ein Ventoux-Finale.</p>
-            <div className="hero-actions"><a className="button button-primary" href="#route">Route erkunden <span>↓</span></a><a className="button button-quiet" href="#stages">Etappen ansehen</a></div>
+            <div className="hero-actions"><a className="button button-primary" href="#route">Route erkunden <span>↓</span></a><a className="button button-quiet" href={komootUrl} target="_blank" rel="noreferrer">Tour in Komoot <span>↗</span></a></div>
           </div>
           <aside className="hero-stats" aria-label="Tourkennzahlen">
             <div><strong>{format.format(totalKm)}</strong><span>km GPX</span></div>
@@ -99,10 +101,17 @@ export default function Home() {
       <section className="stages-section shell" id="stages">
         <div className="section-heading"><div><p className="eyebrow dark">02 · Tagesrhythmus</p><h2>Fahren. Essen.<br />Schlafen. Repeat.</h2></div><p className="section-copy">Nicht gottlos kurz und nicht Dauerfolter: meistens 74–111 km, mit einem echten Basecamp in Briançon, bevor es in die Provence geht.</p></div>
         <div className="stage-layout">
-          <div className="stage-list" aria-label="Etappen auswählen">
-            {stages.slice(0, 5).map((stage) => <StageButton key={stage.day} stage={stage} selected={selectedDay === stage.day} onClick={() => setSelectedDay(stage.day)} />)}
-            <div className="rest-break"><span>09–13 SEP</span><strong>Briançon Basecamp</strong><small>Fünf Tage Pause. Granon nur freiwillig.</small></div>
-            {stages.slice(5).map((stage) => <StageButton key={stage.day} stage={stage} selected={selectedDay === stage.day} onClick={() => setSelectedDay(stage.day)} />)}
+          <div className="stage-selector">
+            <label htmlFor="stage-select">Etappe auswählen</label>
+            <select id="stage-select" value={selectedDay} onChange={(event) => setSelectedDay(Number(event.target.value))}>
+              <optgroup label="Genf bis Briançon">
+                {stages.slice(0, 5).map((stage) => <option value={stage.day} key={stage.day}>Tag {stage.day} · {stage.route}</option>)}
+              </optgroup>
+              <optgroup label="Nach dem Basecamp">
+                {stages.slice(5).map((stage) => <option value={stage.day} key={stage.day}>Tag {stage.day} · {stage.route}</option>)}
+              </optgroup>
+            </select>
+            <div className="rest-break"><span>09–13 Sep</span><strong>Briançon Basecamp</strong><small>Fünf Pausentage zwischen Tag 5 und 6. Granon nur freiwillig.</small></div>
           </div>
           <article className={`stage-detail ${selectedStage.tone === "warm" ? "is-warm" : ""}`}>
             <div className="stage-detail-top"><span>TAG {String(selectedStage.day).padStart(2, "0")}</span><small>{selectedStage.date}</small></div>
@@ -126,8 +135,4 @@ export default function Home() {
       <footer className="footer shell"><span>GENF → AVIGNON</span><span>GPX-STAND · 04 AUG 2026</span><span>2027 TOUR COMPANION</span></footer>
     </main>
   );
-}
-
-function StageButton({ stage, selected, onClick }: { stage: Stage; selected: boolean; onClick: () => void }) {
-  return <button className={`stage-button ${selected ? "selected" : ""}`} onClick={onClick} aria-pressed={selected}><span>{String(stage.day).padStart(2, "0")}</span><b>{stage.route}</b><small>{stage.km} km · +{format.format(stage.gain)} hm</small></button>;
 }
