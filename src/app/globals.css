@@ -145,6 +145,42 @@ h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; l
 .detail-block.booking { border-top: 1px solid #4d5f63; margin-top: 21px; padding-top: 17px; }
 .is-warm .detail-block.booking { border-color: #b74923; }
 
+.basecamp-section { background: var(--green); color: var(--cream); padding: 108px 0 120px; }
+.basecamp-heading h2 { color: var(--cream); }
+.basecamp-heading h2 em { color: var(--yellow); font-style: normal; }
+.basecamp-heading .section-copy { color: #d5e0d7; }
+.basecamp-layout { align-items: stretch; display: grid; gap: 52px; grid-template-columns: minmax(260px, .52fr) minmax(370px, 1fr); }
+.basecamp-selector { background: #dbe5dc; color: var(--ink); padding: 23px; }
+.basecamp-selector > label { color: var(--orange); display: block; font-size: 10px; font-weight: 900; letter-spacing: .12em; margin-bottom: 11px; text-transform: uppercase; }
+.basecamp-selector select { appearance: none; background: var(--cream) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%2318262d' d='m5 7 5 6 5-6z'/%3E%3C/svg%3E") no-repeat right 14px center / 17px; border: 1px solid #bdcec0; border-radius: 0; color: var(--ink); cursor: pointer; font-family: Georgia, "Times New Roman", serif; font-size: 18px; letter-spacing: -.025em; line-height: 1.2; padding: 14px 43px 14px 14px; width: 100%; }
+.basecamp-selector select:focus-visible { outline: 3px solid rgb(244 189 70 / 78%); outline-offset: 2px; }
+.basecamp-options { border-top: 1px solid #bdcec0; display: grid; margin-top: 25px; }
+.basecamp-options button { background: transparent; border: 0; border-bottom: 1px solid #bdcec0; color: var(--ink); cursor: pointer; display: grid; grid-template-columns: 28px 1fr; padding: 15px 0; text-align: left; }
+.basecamp-options button:hover, .basecamp-options button.is-selected { color: var(--blue); }
+.basecamp-options span { color: var(--orange); font-size: 10px; font-weight: 900; letter-spacing: .1em; padding-top: 4px; }
+.basecamp-options strong { font-family: Georgia, "Times New Roman", serif; font-size: 22px; font-weight: 500; letter-spacing: -.03em; }
+.basecamp-options small { color: var(--muted); font-size: 11px; font-weight: 700; grid-column: 2; margin-top: 2px; }
+.basecamp-rule { color: var(--muted); font-size: 13px; line-height: 1.55; margin: 25px 0 0; }
+.basecamp-detail { background: var(--ink); min-height: 600px; padding: 31px; }
+.basecamp-detail.is-finestre { background: #213941; }
+.basecamp-detail-top { display: flex; font-size: 10px; font-weight: 900; justify-content: space-between; letter-spacing: .1em; text-transform: uppercase; }
+.basecamp-detail-top > span { color: var(--yellow); }
+.basecamp-detail-top small { color: #b7c8c0; font-size: 10px; }
+.basecamp-detail h3 { font-size: 50px; line-height: .92; margin: 38px 0 8px; }
+.basecamp-route { color: #b8c7c1; font-family: Georgia, "Times New Roman", serif; font-size: 17px; letter-spacing: -.02em; line-height: 1.35; margin-bottom: 32px; }
+.basecamp-big-numbers { border-bottom: 1px solid #4d5f63; border-top: 1px solid #4d5f63; display: grid; grid-template-columns: .75fr 1fr 1fr; padding: 17px 0; }
+.basecamp-big-numbers b { color: var(--cream); display: block; font-size: 27px; letter-spacing: -.06em; line-height: 1; }
+.basecamp-big-numbers span { color: #afc0bb; display: block; font-size: 9px; font-weight: 900; letter-spacing: .1em; margin-top: 4px; text-transform: uppercase; }
+.basecamp-copy { border-bottom: 1px solid #4d5f63; padding: 20px 0; }
+.basecamp-copy p { color: var(--yellow); font-family: Georgia, "Times New Roman", serif; font-size: 21px; letter-spacing: -.03em; line-height: 1.18; margin-bottom: 10px; }
+.basecamp-copy small { color: #c2d0ca; font-size: 13px; line-height: 1.58; }
+.basecamp-meta { display: grid; gap: 22px; grid-template-columns: 1fr 1fr; padding: 21px 0 25px; }
+.basecamp-meta span { color: #afc0bb; font-size: 9px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+.basecamp-meta p { color: var(--cream); font-family: Georgia, "Times New Roman", serif; font-size: 16px; letter-spacing: -.02em; line-height: 1.32; margin: 7px 0 0; }
+.basecamp-link { align-items: center; border-bottom: 1px solid #637578; border-top: 1px solid #637578; color: var(--cream); display: flex; font-size: 10px; font-weight: 900; justify-content: space-between; letter-spacing: .1em; padding: 15px 0; text-decoration: none; text-transform: uppercase; }
+.basecamp-link:hover { color: var(--yellow); }
+.basecamp-link span { font-size: 17px; }
+
 .cols-section { background: var(--ink); color: var(--cream); padding: 108px 0 120px; }
 .cols-section .section-heading h2 { color: var(--cream); }
 .cols-section .section-copy { color: #bdcbc5; }
@@ -178,7 +214,7 @@ h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; l
 @media (max-width: 880px) {
   .hero-grid { grid-template-columns: 1fr; gap: 35px; min-height: 590px; }
   .hero-stats { align-self: start; max-width: 310px; }
-  .section-heading, .stage-layout, .closing { grid-template-columns: 1fr; }
+  .section-heading, .stage-layout, .basecamp-layout, .closing { grid-template-columns: 1fr; }
   .section-heading { gap: 22px; }
   .stage-detail { position: relative; top: 0; }
   .closing .button { grid-column: 1; }
@@ -206,6 +242,10 @@ h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; l
   .stage-selector { padding: 20px; }
   .stage-detail { min-height: auto; padding: 25px; }
   .stage-detail h3 { font-size: 40px; margin: 38px 0 28px; }
+  .basecamp-section { padding-bottom: 75px; }
+  .basecamp-detail { min-height: auto; padding: 25px; }
+  .basecamp-detail h3 { font-size: 42px; }
+  .basecamp-meta { grid-template-columns: 1fr; }
   .col-grid { grid-template-columns: 1fr; }
   .col-card { min-height: 154px; }
   .cols-section { padding-bottom: 75px; }

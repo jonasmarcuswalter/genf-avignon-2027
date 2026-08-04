@@ -26,6 +26,23 @@ type Col = {
   url: string;
 };
 
+type BasecampRide = {
+  id: "granon" | "finestre";
+  name: string;
+  route: string;
+  km: number;
+  gain: number;
+  rideTime: string;
+  surface: string;
+  level: string;
+  punchline: string;
+  description: string;
+  keyClimbs: string;
+  bikeNote: string;
+  komoot: string;
+  tone: "granon" | "finestre";
+};
+
 const komootUrl = "https://www.komoot.com/de-de/tour/3168160179?share_token=abVzeXcWdamobmQ3OkvlriMsbYu5lKUeHb5WmCa7qWVoBz6zU4&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=1472812756621";
 
 const stages: Stage[] = [
@@ -58,11 +75,48 @@ const cols: Col[] = [
   { name: "Mont Ventoux", side: "Südrampe von Bédoin", day: "T10", km: "21,2", gain: "1.599", grade: "7,5", url: "https://www.quaeldich.de/paesse/mont-ventoux/profile/suedrampe-von-bedoin/" },
 ];
 
+const basecampRides: BasecampRide[] = [
+  {
+    id: "granon",
+    name: "Col du Granon",
+    route: "Briançon → Granon → Briançon",
+    km: 34,
+    gain: 1207,
+    rideTime: "3–4 h",
+    surface: "100 % Asphalt",
+    level: "Kurz. Brutal. Optional.",
+    punchline: "Der Pausentag, an dem man nur kurz schauen geht, ob die Beine noch funktionieren.",
+    description: "34 Kilometer, aber die Höhe steht praktisch senkrecht im Weg: von Briançon hoch bis knapp 2.400 Meter und wieder zurück. Die Passhöhe liegt im GPX bei Kilometer 17,2 — danach gibt es nur noch Aussicht und Bremsbeläge.",
+    keyClimbs: "Col du Granon · ungefähr 1.150 HM am Stück",
+    bikeNote: "Reines Rennrad-Terrain. Leichte Übersetzung, volle Bidons und keinen Termin danach planen.",
+    komoot: "https://www.komoot.com/de-de/tour/3169902184",
+    tone: "granon",
+  },
+  {
+    id: "finestre",
+    name: "Colle delle Finestre",
+    route: "Briançon → Montgenèvre → Susa → Finestre → Sestriere → Briançon",
+    km: 133,
+    gain: 3542,
+    rideTime: "8–10 h",
+    surface: "Asphalt + Schotter bergauf",
+    level: "Gottlos. Nur mit Ansage.",
+    punchline: "Eine echte All-Day-Expedition. Kein Ruhetag, sondern ein Gerichtsverfahren gegen die Oberschenkel.",
+    description: "Die große italienische Runde: erst über Montgenèvre ins Tal von Susa, dann rund 1.400 Höhenmeter zum Finestre. Der Schotterteil liegt auf der Auffahrt — genau so, wie bestellt. Über Sestriere und Montgenèvre kommt ihr mit der letzten Würde nach Briançon zurück.",
+    keyClimbs: "Montgenèvre · Colle delle Finestre · Sestriere · Montgenèvre retour",
+    bikeNote: "30 mm sind das Minimum, 32 mm und ein wirklich leichter Gang die deutlich bessere Idee. Nur für die Fraktion, die am Pausentag noch etwas beweisen möchte.",
+    komoot: "https://www.komoot.com/de-de/tour/3169894892",
+    tone: "finestre",
+  },
+];
+
 const format = new Intl.NumberFormat("de-CH");
 
 export default function Home() {
   const [selectedDay, setSelectedDay] = useState(1);
+  const [selectedBasecampRideId, setSelectedBasecampRideId] = useState<BasecampRide["id"]>("granon");
   const selectedStage = stages.find((stage) => stage.day === selectedDay) ?? stages[0];
+  const selectedBasecampRide = basecampRides.find((ride) => ride.id === selectedBasecampRideId) ?? basecampRides[0];
   const totalKm = useMemo(() => stages.reduce((sum, stage) => sum + stage.km, 0), []);
   const totalGain = useMemo(() => stages.reduce((sum, stage) => sum + stage.gain, 0), []);
   const mapStops = useMemo(() => stages.map(({ day, stop, coordinates }) => ({ day, name: stop, coordinates })), []);
@@ -72,7 +126,7 @@ export default function Home() {
       <section className="hero" id="top">
         <nav className="nav shell" aria-label="Hauptnavigation">
           <a className="wordmark" href="#top"><span>∕∕</span> AUF DER SPUREN DER COLS DER TOUR</a>
-          <div className="nav-links"><a href="#route">Route</a><a href="#stages">Etappen</a><a href="#cols">Cols</a></div>
+          <div className="nav-links"><a href="#route">Route</a><a href="#stages">Etappen</a><a href="#briancon">Briançon</a><a href="#cols">Cols</a></div>
           <span className="edition">SEP 2027</span>
         </nav>
         <div className="hero-grid shell">
@@ -111,7 +165,7 @@ export default function Home() {
                 {stages.slice(5).map((stage) => <option value={stage.day} key={stage.day}>Tag {stage.day} · {stage.route}</option>)}
               </optgroup>
             </select>
-            <div className="rest-break"><span>09–13 Sep</span><strong>Briançon Basecamp</strong><small>Fünf Pausentage zwischen Tag 5 und 6. Granon nur freiwillig.</small></div>
+            <div className="rest-break"><span>09–13 Sep</span><strong>Briançon Basecamp</strong><small>Fünf Pausentage zwischen Tag 5 und 6. Zwei optionale Nebenquests: Granon oder Finestre — beide freiwillig.</small></div>
           </div>
           <article className={`stage-detail ${selectedStage.tone === "warm" ? "is-warm" : ""}`}>
             <div className="stage-detail-top"><span>TAG {String(selectedStage.day).padStart(2, "0")}</span><small>{selectedStage.date}</small></div>
@@ -123,8 +177,35 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="basecamp-section" id="briancon">
+        <div className="shell">
+          <div className="section-heading basecamp-heading"><div><p className="eyebrow">03 · Briançon Basecamp</p><h2>Pause heißt nicht<br /><em>Pflichtprogramm.</em></h2></div><p className="section-copy">Fünf Tage ohne Gepäck und ohne Zeitdruck. Es gibt Sauna, Pasta und Spaziergänge — oder zwei sehr unterschiedliche Ideen, die Beine erneut zu beleidigen.</p></div>
+          <div className="basecamp-layout">
+            <div className="basecamp-selector">
+              <label htmlFor="basecamp-ride-select">Option auswählen</label>
+              <select id="basecamp-ride-select" value={selectedBasecampRideId} onChange={(event) => setSelectedBasecampRideId(event.target.value as BasecampRide["id"])}>
+                {basecampRides.map((ride) => <option value={ride.id} key={ride.id}>{ride.name} · {ride.km} km · +{format.format(ride.gain)} HM</option>)}
+              </select>
+              <div className="basecamp-options" aria-label="Briançon-Ausfahrten">
+                {basecampRides.map((ride) => <button className={selectedBasecampRide.id === ride.id ? "is-selected" : ""} key={ride.id} type="button" onClick={() => setSelectedBasecampRideId(ride.id)}><span>{ride.id === "granon" ? "01" : "02"}</span><strong>{ride.name}</strong><small>{ride.level}</small></button>)}
+              </div>
+              <p className="basecamp-rule">Die echte Pausenoption bleibt: ausschlafen, Espresso, Sauna und Carbs laden. Kein Rechtfertigungsformular nötig.</p>
+            </div>
+            <article className={`basecamp-detail is-${selectedBasecampRide.tone}`}>
+              <div className="basecamp-detail-top"><span>OPTION {selectedBasecampRide.id === "granon" ? "01" : "02"}</span><small>{selectedBasecampRide.surface}</small></div>
+              <h3>{selectedBasecampRide.name}</h3>
+              <p className="basecamp-route">{selectedBasecampRide.route}</p>
+              <div className="basecamp-big-numbers"><div><b>{selectedBasecampRide.km}</b><span>KM</span></div><div><b>+{format.format(selectedBasecampRide.gain)}</b><span>HM</span></div><div><b>{selectedBasecampRide.rideTime}</b><span>FAHRZEIT</span></div></div>
+              <div className="basecamp-copy"><p>{selectedBasecampRide.punchline}</p><small>{selectedBasecampRide.description}</small></div>
+              <div className="basecamp-meta"><div><span>KEY CLIMBS</span><p>{selectedBasecampRide.keyClimbs}</p></div><div><span>BIKE CHECK</span><p>{selectedBasecampRide.bikeNote}</p></div></div>
+              <a className="basecamp-link" href={selectedBasecampRide.komoot} target="_blank" rel="noreferrer">GPX in Komoot öffnen <span>↗</span></a>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section className="cols-section" id="cols">
-        <div className="shell"><div className="section-heading cols-heading"><div><p className="eyebrow">03 · Die Anstiege</p><h2>Die Col-Liste.<br />Keine Ausreden.</h2></div><p className="section-copy">Klassische Auffahrten mit den jeweiligen Quäldich-Kennzahlen. Ein Klick bringt direkt zum vollständigen Höhenprofil.</p></div>
+        <div className="shell"><div className="section-heading cols-heading"><div><p className="eyebrow">04 · Die Anstiege</p><h2>Die Col-Liste.<br />Keine Ausreden.</h2></div><p className="section-copy">Klassische Auffahrten mit den jeweiligen Quäldich-Kennzahlen. Ein Klick bringt direkt zum vollständigen Höhenprofil.</p></div>
           <div className="col-grid">
             {cols.map((col) => <a className={`col-card ${col.name === "Alpe d’Huez" || col.name === "Mont Ventoux" ? "featured" : ""}`} href={col.url} target="_blank" rel="noreferrer" key={col.name}><div className="col-card-head"><span>{col.day}</span><b>{col.name}</b><i>↗</i></div><p>{col.side}</p><div className="col-stats"><span><strong>{col.km}</strong> km</span><span><strong>+{col.gain}</strong> hm</span><span><strong>Ø {col.grade}</strong> %</span></div></a>)}
           </div>
