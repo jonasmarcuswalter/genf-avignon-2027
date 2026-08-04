@@ -61,7 +61,7 @@ const cols: Col[] = [
 const format = new Intl.NumberFormat("de-CH");
 
 export default function Home() {
-  const [selectedDay, setSelectedDay] = useState(3);
+  const [selectedDay, setSelectedDay] = useState(1);
   const selectedStage = stages.find((stage) => stage.day === selectedDay) ?? stages[0];
   const totalKm = useMemo(() => stages.reduce((sum, stage) => sum + stage.km, 0), []);
   const totalGain = useMemo(() => stages.reduce((sum, stage) => sum + stage.gain, 0), []);
