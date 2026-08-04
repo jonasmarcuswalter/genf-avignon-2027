@@ -3,11 +3,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://jonasmarcuswalter.github.io/genf-avignon-2027/"),
-  title: "Genf → Avignon 2027 | Alpen Bikepacking",
-  description: "Der Tour-Kompass für 900 km, 17.000 Höhenmeter und 14 französische Cols.",
+  title: "Auf der Spuren der Cols der Tour | Genf → Avignon 2027",
+  description: "Auf der Spuren der Cols der Tour: 900 km, 17.000 Höhenmeter und 14 französische Cols.",
   openGraph: {
-    title: "Genf → Avignon 2027",
-    description: "900 km, 17.000 Höhenmeter, 14 Cols. Der Alpen-Bikepacking-Tourkompass.",
+    title: "Auf der Spuren der Cols der Tour",
+    description: "Genf → Avignon 2027: 900 km, 17.000 Höhenmeter, 14 Cols.",
     images: [{ url: "/og.png", width: 1792, height: 896, alt: "Alpenstraße für die Genf–Avignon-Rennradtour" }],
   },
   twitter: { card: "summary_large_image" },

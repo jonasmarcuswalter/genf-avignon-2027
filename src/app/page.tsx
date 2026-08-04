@@ -71,7 +71,7 @@ export default function Home() {
     <main>
       <section className="hero" id="top">
         <nav className="nav shell" aria-label="Hauptnavigation">
-          <a className="wordmark" href="#top"><span>∕∕</span> GRAND TOUR</a>
+          <a className="wordmark" href="#top"><span>∕∕</span> AUF DER SPUREN DER COLS DER TOUR</a>
           <div className="nav-links"><a href="#route">Route</a><a href="#stages">Etappen</a><a href="#cols">Cols</a></div>
           <span className="edition">SEP 2027</span>
         </nav>
