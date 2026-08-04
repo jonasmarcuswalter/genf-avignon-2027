@@ -89,7 +89,7 @@ const basecampRides: BasecampRide[] = [
     description: "34 Kilometer, aber die Höhe steht praktisch senkrecht im Weg: von Briançon hoch bis knapp 2.400 Meter und wieder zurück. Die Passhöhe liegt im GPX bei Kilometer 17,2 — danach gibt es nur noch Aussicht und Bremsbeläge.",
     keyClimbs: "Col du Granon · ungefähr 1.150 HM am Stück",
     bikeNote: "Reines Rennrad-Terrain. Leichte Übersetzung, volle Bidons und keinen Termin danach planen.",
-    komoot: "https://www.komoot.com/de-de/tour/3169902184",
+    komoot: "https://www.komoot.com/de-de/tour/3169902184?share_token=alfxWBeZINPR4m2nhOGP7FXjdXoGNA1J4dFMwthBAXpmXrDFqz&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=1472812756621",
     tone: "granon",
   },
   {
@@ -105,7 +105,7 @@ const basecampRides: BasecampRide[] = [
     description: "Die große italienische Runde: erst über Montgenèvre ins Tal von Susa, dann rund 1.400 Höhenmeter zum Finestre. Der Schotterteil liegt auf der Auffahrt — genau so, wie bestellt. Über Sestriere und Montgenèvre kommt ihr mit der letzten Würde nach Briançon zurück.",
     keyClimbs: "Montgenèvre · Colle delle Finestre · Sestriere · Montgenèvre retour",
     bikeNote: "30 mm sind das Minimum, 32 mm und ein wirklich leichter Gang die deutlich bessere Idee. Nur für die Fraktion, die am Pausentag noch etwas beweisen möchte.",
-    komoot: "https://www.komoot.com/de-de/tour/3169894892",
+    komoot: "https://www.komoot.com/de-de/tour/3169894892?share_token=axYNKWBmZqB5xh65wT7z3ZtPAsFhbIA37r8TsDUX4GL3tnzGk6&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=1472812756621",
     tone: "finestre",
   },
 ];
