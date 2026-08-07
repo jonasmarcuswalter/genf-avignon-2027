@@ -19,12 +19,68 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="de" className="h-full">
       <body className="min-h-full flex flex-col">
         <Script id="reset-initial-scroll" strategy="beforeInteractive">{`
-          if (!window.location.hash) {
+          (() => {
+            if (window.location.hash) return;
+
             if ("scrollRestoration" in window.history) {
               window.history.scrollRestoration = "manual";
             }
-            window.scrollTo(0, 0);
-          }
+
+            let userInteracted = false;
+            let guardVersion = 0;
+
+            const markInteraction = () => {
+              userInteracted = true;
+            };
+
+            window.addEventListener("touchstart", markInteraction, { capture: true, passive: true });
+            window.addEventListener("pointerdown", markInteraction, { capture: true, passive: true });
+            window.addEventListener("wheel", markInteraction, { capture: true, passive: true });
+            window.addEventListener("keydown", markInteraction, { capture: true });
+
+            const hardReset = () => {
+              window.scrollTo(0, 0);
+              document.documentElement.scrollTop = 0;
+              if (document.body) document.body.scrollTop = 0;
+            };
+
+            const guardTop = () => {
+              if (window.location.hash) return;
+
+              userInteracted = false;
+              const version = ++guardVersion;
+              const root = document.documentElement;
+              const previousBehavior = root.style.getPropertyValue("scroll-behavior");
+              const previousPriority = root.style.getPropertyPriority("scroll-behavior");
+              const stopAt = Date.now() + 1500;
+
+              root.style.setProperty("scroll-behavior", "auto", "important");
+
+              const release = () => {
+                if (previousBehavior) {
+                  root.style.setProperty("scroll-behavior", previousBehavior, previousPriority);
+                } else {
+                  root.style.removeProperty("scroll-behavior");
+                }
+              };
+
+              const keepAtTop = () => {
+                if (version !== guardVersion) return;
+                if (userInteracted || window.location.hash || Date.now() >= stopAt) {
+                  release();
+                  return;
+                }
+
+                hardReset();
+                window.requestAnimationFrame(keepAtTop);
+              };
+
+              keepAtTop();
+            };
+
+            hardReset();
+            window.addEventListener("pageshow", guardTop);
+          })();
         `}</Script>
         {children}
       </body>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import RouteMap from "@/components/route-map";
 
 type Stage = {
@@ -114,34 +114,6 @@ const basecampRides: BasecampRide[] = [
 const format = new Intl.NumberFormat("de-CH");
 
 export default function Home() {
-  useEffect(() => {
-    const previousScrollRestoration = window.history.scrollRestoration;
-
-    const resetScrollPosition = () => {
-      if (window.location.hash) return;
-
-      const root = document.documentElement;
-      const previousScrollBehavior = root.style.scrollBehavior;
-      root.style.scrollBehavior = "auto";
-      window.scrollTo(0, 0);
-      root.style.scrollBehavior = previousScrollBehavior;
-    };
-
-    window.history.scrollRestoration = "manual";
-    resetScrollPosition();
-
-    const animationFrame = window.requestAnimationFrame(resetScrollPosition);
-    const restorationFallback = window.setTimeout(resetScrollPosition, 150);
-    window.addEventListener("pageshow", resetScrollPosition);
-
-    return () => {
-      window.cancelAnimationFrame(animationFrame);
-      window.clearTimeout(restorationFallback);
-      window.removeEventListener("pageshow", resetScrollPosition);
-      window.history.scrollRestoration = previousScrollRestoration;
-    };
-  }, []);
-
   const [selectedDay, setSelectedDay] = useState(1);
   const [selectedBasecampRideId, setSelectedBasecampRideId] = useState<BasecampRide["id"]>("granon");
   const selectedStage = stages.find((stage) => stage.day === selectedDay) ?? stages[0];
