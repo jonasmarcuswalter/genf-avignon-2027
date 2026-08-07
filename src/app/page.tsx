@@ -84,8 +84,8 @@ const basecampRides: BasecampRide[] = [
     gain: 1207,
     rideTime: "3–4 h",
     surface: "100 % Asphalt",
-    level: "Kurz. Brutal. Optional.",
-    punchline: "Der Pausentag, an dem man nur kurz schauen geht, ob die Beine noch funktionieren.",
+    level: "Kurz. Steil. Sonnig.",
+    punchline: "Der freie Tag, an dem man nur kurz nachschaut, ob die Beine noch da sind.",
     description: "34 Kilometer, aber die Höhe steht praktisch senkrecht im Weg: von Briançon hoch bis knapp 2.400 Meter und wieder zurück. Die Passhöhe liegt im GPX bei Kilometer 17,2 — danach gibt es nur noch Aussicht und Bremsbeläge.",
     keyClimbs: "Col du Granon · ungefähr 1.150 HM am Stück",
     bikeNote: "Reines Rennrad-Terrain. Leichte Übersetzung, volle Bidons und keinen Termin danach planen.",
@@ -100,11 +100,11 @@ const basecampRides: BasecampRide[] = [
     gain: 3542,
     rideTime: "8–10 h",
     surface: "Asphalt + Schotter bergauf",
-    level: "Gottlos. Nur mit Ansage.",
-    punchline: "Eine echte All-Day-Expedition. Kein Ruhetag, sondern ein Gerichtsverfahren gegen die Oberschenkel.",
+    level: "All-Day. Schotter. Ansage.",
+    punchline: "Die ganz große Tageskarte für Menschen, die am freien Tag noch sehr viel Landschaft möchten.",
     description: "Die große italienische Runde: erst über Montgenèvre ins Tal von Susa, dann rund 1.400 Höhenmeter zum Finestre. Der Schotterteil liegt auf der Auffahrt — genau so, wie bestellt. Über Sestriere und Montgenèvre kommt ihr mit der letzten Würde nach Briançon zurück.",
     keyClimbs: "Montgenèvre · Colle delle Finestre · Sestriere · Montgenèvre retour",
-    bikeNote: "30 mm sind das Minimum, 32 mm und ein wirklich leichter Gang die deutlich bessere Idee. Nur für die Fraktion, die am Pausentag noch etwas beweisen möchte.",
+    bikeNote: "30 mm sind das Minimum, 32 mm und ein wirklich leichter Gang die deutlich bessere Idee. Nur für die Fraktion, die am freien Tag noch etwas Höhenluft möchte.",
     komoot: "https://www.komoot.com/de-de/tour/3169894892?share_token=axYNKWBmZqB5xh65wT7z3ZtPAsFhbIA37r8TsDUX4GL3tnzGk6&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=1472812756621",
     tone: "finestre",
   },
@@ -124,96 +124,101 @@ export default function Home() {
   return (
     <main>
       <section className="hero" id="top">
+        <div className="hero-sun" aria-hidden="true" />
+        <div className="hero-horizon" aria-hidden="true" />
         <nav className="nav shell" aria-label="Hauptnavigation">
-          <a className="wordmark" href="#top"><span>∕∕</span> AUF DER SPUREN DER COLS DER TOUR</a>
-          <div className="nav-links"><a href="#route">Route</a><a href="#stages">Etappen</a><a href="#briancon">Briançon</a><a href="#cols">Cols</a></div>
+          <a className="wordmark" href="#top"><span aria-hidden="true">☼</span><b>ULLAUB</b><small>TOUR DES COLS</small></a>
+          <div className="nav-links"><a href="#route">Reiseplan</a><a href="#stages">Strampelplan</a><a href="#briancon">Ullaub-Zone</a><a href="#cols">All inclusive</a></div>
           <span className="edition">SEP 2027</span>
         </nav>
         <div className="hero-grid shell">
           <div className="hero-copy">
-            <p className="eyebrow">Rennrad-Bikepacking · Frankreich</p>
-            <h1>Genf<br /><em>→</em> Avignon</h1>
-            <p className="hero-lead">Ein Straßenband durch die französischen Alpen. Zehn Tage fahren, fünf Tage Briançon, ein Ventoux-Finale.</p>
-            <div className="hero-actions"><a className="button button-primary" href="#route">Route erkunden <span>↓</span></a><a className="button button-quiet" href={komootUrl} target="_blank" rel="noreferrer">Tour in Komoot <span>↗</span></a></div>
+            <p className="eyebrow">Genf → Avignon · Rennrad-Edition</p>
+            <h1><span>ULLAUB</span><em>TOUR DES COLS</em></h1>
+            <p className="hero-subline">Genf → Avignon · 04–18 September 2027</p>
+            <p className="hero-lead">Zehn Tage Strampelplan durch die Alpen, fünf Tage Ullaub-Zone in Briançon und zum Dessert der Ventoux. Sonnencreme einpacken. Carbs laden. Losfahren.</p>
+            <div className="hero-actions"><a className="button button-primary" href="#route">Reiseplan öffnen <span>↓</span></a><a className="button button-quiet" href={komootUrl} target="_blank" rel="noreferrer">Komoot einchecken <span>↗</span></a></div>
           </div>
           <aside className="hero-stats" aria-label="Tourkennzahlen">
-            <div><strong>{format.format(totalKm)}</strong><span>km GPX</span></div>
-            <div><strong>~{format.format(totalGain)}</strong><span>Höhenmeter</span></div>
-            <div><strong>10</strong><span>Fahrtage</span></div>
-            <div><strong>14</strong><span>Cols</span></div>
+            <div><strong>{format.format(totalKm)}</strong><span>km Ullaub</span></div>
+            <div><strong>~{format.format(totalGain)}</strong><span>hm inklusive</span></div>
+            <div><strong>10</strong><span>Strampeltage</span></div>
+            <div><strong>14</strong><span>Cols à la carte</span></div>
           </aside>
+          <div className="all-inclusive-sticker" aria-hidden="true"><span>ALL</span><strong>INCL.</strong><small>17K HM</small></div>
         </div>
-        <div className="hero-rule shell"><span>04—18 SEPTEMBER</span><span>ALPEN → PROVENCE</span><span>CARBS LADEN, DANN KURBELN</span></div>
+        <div className="hero-rule shell"><span>04—18 SEPTEMBER</span><span>ALPEN → PROVENCE</span><span>POOLBLAU, BERGE, BIDONS</span></div>
       </section>
 
       <section className="route-section" id="route">
-        <div className="section-heading shell"><div><p className="eyebrow dark">01 · Die Strecke</p><h2>Ein Band von Genf<br />in die Provence.</h2></div><p className="section-copy">Die Linie auf der Karte ist deine echte GPX-Route. Jede Zahl markiert das Ende eines Fahrtags und den Ort, an dem das Bett schon stehen sollte.</p></div>
-        <div className="map-frame"><RouteMap stops={mapStops} /><div className="map-key"><span><i /> GPX-Route</span><span><b>1</b> Etappenziel</span></div></div>
-        <div className="timeline shell"><div><small>START</small><b>Genf</b><span>Sa 04 Sep</span></div><i /><div><small>ALPENBLOCK</small><b>Briançon</b><span>Mi 08 Sep</span></div><i /><div className="pause"><small>BASECAMP</small><b>5 Pausentage</b><span>09–13 Sep</span></div><i /><div><small>FINISH</small><b>Avignon</b><span>Sa 18 Sep</span></div></div>
+        <div className="section-heading shell"><div><p className="eyebrow dark">01 · Reiseplan</p><h2>Poolblau los.<br />Provence an.</h2></div><p className="section-copy">Das ist die echte GPX-Linie: zehn Etappen, ein großes Alpenprogramm und Übernachtungsorte, in denen es auch wirklich ein Bett gibt.</p></div>
+        <div className="map-frame"><RouteMap stops={mapStops} /><div className="map-key"><span><i /> GPX-Reiseplan</span><span><b>1</b> Check-in</span></div></div>
+        <div className="timeline shell"><div><small>CHECK-IN</small><b>Genf</b><span>Sa 04 Sep</span></div><i /><div><small>ALPENBLOCK</small><b>Briançon</b><span>Mi 08 Sep</span></div><i /><div className="pause"><small>ULLAUB-ZONE</small><b>5 freie Tage</b><span>09–13 Sep</span></div><i /><div><small>CHECK-OUT</small><b>Avignon</b><span>Sa 18 Sep</span></div></div>
       </section>
 
       <section className="stages-section shell" id="stages">
-        <div className="section-heading"><div><p className="eyebrow dark">02 · Tagesrhythmus</p><h2>Fahren. Essen.<br />Schlafen. Repeat.</h2></div><p className="section-copy">Nicht gottlos kurz und nicht Dauerfolter: meistens 74–111 km, mit einem echten Basecamp in Briançon, bevor es in die Provence geht.</p></div>
+        <div className="section-heading"><div><p className="eyebrow dark">02 · Strampelplan</p><h2>Raus aus dem Bett.<br />Rauf auf den Col.</h2></div><p className="section-copy">Kein Etappenmarathon für die Galerie: meistens 74–111 km. Erst fünf Tage Alpen, dann fünf Tage Pause, dann die große südliche Abfahrt.</p></div>
         <div className="stage-layout">
           <div className="stage-selector">
-            <label htmlFor="stage-select">Etappe auswählen</label>
+            <label htmlFor="stage-select">Tag aussuchen</label>
             <select id="stage-select" value={selectedDay} onChange={(event) => setSelectedDay(Number(event.target.value))}>
               <optgroup label="Genf bis Briançon">
                 {stages.slice(0, 5).map((stage) => <option value={stage.day} key={stage.day}>Tag {stage.day} · {stage.route}</option>)}
               </optgroup>
-              <optgroup label="Nach dem Basecamp">
+              <optgroup label="Nach der Ullaub-Zone">
                 {stages.slice(5).map((stage) => <option value={stage.day} key={stage.day}>Tag {stage.day} · {stage.route}</option>)}
               </optgroup>
             </select>
-            <div className="rest-break"><span>09–13 Sep</span><strong>Briançon Basecamp</strong><small>Fünf Pausentage zwischen Tag 5 und 6. Granon und Finestre sind zwei Optionen für die Zeit dort.</small></div>
+            <div className="rest-break"><span>09–13 Sep · Ullaub-Zone</span><strong>Briançon macht Pause.</strong><small>Fünf freie Tage zwischen Tag 5 und 6: Haus, Sauna, Espresso, Carbs laden — oder eine der Ausfahrten darunter.</small></div>
           </div>
-          <article className={`stage-detail ${selectedStage.tone === "warm" ? "is-warm" : ""}`}>
-            <div className="stage-detail-top"><span>TAG {String(selectedStage.day).padStart(2, "0")}</span><small>{selectedStage.date}</small></div>
+          <article className={`stage-detail ${selectedStage.tone === "warm" ? "is-warm" : ""}`} aria-live="polite">
+            <div className="stage-detail-top"><span>ETAPPE {String(selectedStage.day).padStart(2, "0")}</span><small>{selectedStage.date}</small></div>
             <h3>{selectedStage.route}</h3>
             <div className="big-numbers"><div><b>{selectedStage.km}</b><span>KM</span></div><div><b>+{format.format(selectedStage.gain)}</b><span>HM</span></div></div>
-            <div className="detail-block"><small>COLS AUF DIESER ETAPPE</small><p>{selectedStage.cols.join(" · ")}</p></div>
-            <div className="detail-block booking"><small>ÜBERNACHTEN IN {selectedStage.stop.toUpperCase()}</small><p>{selectedStage.booking}</p></div>
+            <div className="detail-block"><small>COL-MENÜ</small><p>{selectedStage.cols.join(" · ")}</p></div>
+            <div className="detail-block booking"><small>BETT & BASIS · {selectedStage.stop.toUpperCase()}</small><p>{selectedStage.booking}</p></div>
           </article>
         </div>
       </section>
 
       <section className="basecamp-section" id="briancon">
+        <div className="pool-orb" aria-hidden="true" />
         <div className="shell">
-          <div className="section-heading basecamp-heading"><div><p className="eyebrow">03 · Briançon Basecamp</p><h2>Optionen für<br /><em>die Zeit dort.</em></h2></div><p className="section-copy">Fünf Tage ohne Gepäck und ohne Zeitdruck. Granon und Finestre sind zwei sehr unterschiedliche Ausfahrten direkt ab Briançon.</p></div>
+          <div className="section-heading basecamp-heading"><div><p className="eyebrow">03 · Ullaub-Zone Briançon</p><h2>Freie Tage.<br /><em>Freie Beine.</em></h2></div><p className="section-copy">Briançon ist die Station zum Wohnen statt Weiterziehen. Die zwei Runden sind Optionen für diese Zeit — kein Pflichtprogramm.</p></div>
           <div className="basecamp-layout">
             <div className="basecamp-selector">
-              <label htmlFor="basecamp-ride-select">Option auswählen</label>
+              <label htmlFor="basecamp-ride-select">Ausfahrt wählen</label>
               <select id="basecamp-ride-select" value={selectedBasecampRideId} onChange={(event) => setSelectedBasecampRideId(event.target.value as BasecampRide["id"])}>
                 {basecampRides.map((ride) => <option value={ride.id} key={ride.id}>{ride.name} · {ride.km} km · +{format.format(ride.gain)} HM</option>)}
               </select>
-              <div className="basecamp-options" aria-label="Briançon-Ausfahrten">
-                {basecampRides.map((ride) => <button className={selectedBasecampRide.id === ride.id ? "is-selected" : ""} key={ride.id} type="button" onClick={() => setSelectedBasecampRideId(ride.id)}><span>{ride.id === "granon" ? "01" : "02"}</span><strong>{ride.name}</strong><small>{ride.level}</small></button>)}
+              <div className="basecamp-options" aria-label="Optionale Briançon-Ausfahrten">
+                {basecampRides.map((ride) => <button aria-pressed={selectedBasecampRide.id === ride.id} className={selectedBasecampRide.id === ride.id ? "is-selected" : ""} key={ride.id} type="button" onClick={() => setSelectedBasecampRideId(ride.id)}><span>{ride.id === "granon" ? "01" : "02"}</span><strong>{ride.name}</strong><small>{ride.level}</small></button>)}
               </div>
-              <p className="basecamp-rule">Die echte Pausenoption bleibt: ausschlafen, Espresso, Sauna und Carbs laden. Kein Rechtfertigungsformular nötig.</p>
+              <p className="basecamp-rule">Die Hauptoption bleibt immer: ausschlafen, Espresso, Sauna und Carbs laden. Kein Rechtfertigungsformular nötig.</p>
             </div>
-            <article className={`basecamp-detail is-${selectedBasecampRide.tone}`}>
+            <article className={`basecamp-detail is-${selectedBasecampRide.tone}`} aria-live="polite">
               <div className="basecamp-detail-top"><span>OPTION {selectedBasecampRide.id === "granon" ? "01" : "02"}</span><small>{selectedBasecampRide.surface}</small></div>
               <h3>{selectedBasecampRide.name}</h3>
               <p className="basecamp-route">{selectedBasecampRide.route}</p>
               <div className="basecamp-big-numbers"><div><b>{selectedBasecampRide.km}</b><span>KM</span></div><div><b>+{format.format(selectedBasecampRide.gain)}</b><span>HM</span></div><div><b>{selectedBasecampRide.rideTime}</b><span>FAHRZEIT</span></div></div>
               <div className="basecamp-copy"><p>{selectedBasecampRide.punchline}</p><small>{selectedBasecampRide.description}</small></div>
-              <div className="basecamp-meta"><div><span>KEY CLIMBS</span><p>{selectedBasecampRide.keyClimbs}</p></div><div><span>BIKE CHECK</span><p>{selectedBasecampRide.bikeNote}</p></div></div>
-              <a className="basecamp-link" href={selectedBasecampRide.komoot} target="_blank" rel="noreferrer">GPX in Komoot öffnen <span>↗</span></a>
+              <div className="basecamp-meta"><div><span>BERGPROGRAMM</span><p>{selectedBasecampRide.keyClimbs}</p></div><div><span>RAD-CHECK</span><p>{selectedBasecampRide.bikeNote}</p></div></div>
+              <a className="basecamp-link" href={selectedBasecampRide.komoot} target="_blank" rel="noreferrer">In Komoot einchecken <span>↗</span></a>
             </article>
           </div>
         </div>
       </section>
 
       <section className="cols-section" id="cols">
-        <div className="shell"><div className="section-heading cols-heading"><div><p className="eyebrow">04 · Die Anstiege</p><h2>Die Col-Liste.<br />Keine Ausreden.</h2></div><p className="section-copy">Klassische Auffahrten mit den jeweiligen Quäldich-Kennzahlen. Ein Klick bringt direkt zum vollständigen Höhenprofil.</p></div>
+        <div className="shell"><div className="section-heading cols-heading"><div><p className="eyebrow">04 · All-inclusive-Höhenmeter</p><h2>Die Cols.<br />Sonnencreme reicht nicht.</h2></div><p className="section-copy">Alle Auffahrten mit den exakten Quäldich-Zahlen. Ein Klick führt direkt zum Höhenprofil — für Vorfreude, Nervosität und Gangwahl.</p></div>
           <div className="col-grid">
             {cols.map((col) => <a className={`col-card ${col.name === "Alpe d’Huez" || col.name === "Mont Ventoux" ? "featured" : ""}`} href={col.url} target="_blank" rel="noreferrer" key={col.name}><div className="col-card-head"><span>{col.day}</span><b>{col.name}</b><i>↗</i></div><p>{col.side}</p><div className="col-stats"><span><strong>{col.km}</strong> km</span><span><strong>+{col.gain}</strong> hm</span><span><strong>Ø {col.grade}</strong> %</span></div></a>)}
           </div>
         </div>
       </section>
 
-      <section className="closing shell"><p className="eyebrow dark">The only strategy</p><h2>Früh buchen.<br /><em>Stabil</em> fahren.</h2><p>Die kleinen Übernachtungsorte sind der Engpass. Der Rest ist: ordentlich essen, nicht am ersten Berg platzen und die Aussicht mitnehmen.</p><a className="button button-primary" href="#top">Zurück zum Start <span>↑</span></a></section>
-      <footer className="footer shell"><span>GENF → AVIGNON</span><span>GPX-STAND · 04 AUG 2026</span><span>2027 TOUR COMPANION</span></footer>
+      <section className="closing shell"><p className="eyebrow dark">Ullaub Ende · Heimreise an</p><h2>Gut gebräunt.<br /><em>Stabil gefahren.</em></h2><p>Die kleinen Übernachtungsorte sind der einzige echte Engpass. Alles andere: früh buchen, gut essen, Bidons füllen und die Berge nicht persönlich nehmen.</p><a className="button button-primary" href="#top">Zurück zum Pool <span>↑</span></a></section>
+      <footer className="footer shell"><span>ULLAUB · GENF → AVIGNON</span><span>GPX-STAND · 04 AUG 2026</span><span>TOUR DES COLS · 2027</span></footer>
     </main>
   );
 }

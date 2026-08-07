@@ -3,12 +3,12 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://jonasmarcuswalter.github.io/genf-avignon-2027/"),
-  title: "Auf der Spuren der Cols der Tour | Genf → Avignon 2027",
-  description: "Auf der Spuren der Cols der Tour: 900 km, 17.000 Höhenmeter und 14 französische Cols.",
+  title: "Ullaub – Tour des Cols | Genf → Avignon 2027",
+  description: "Zehn Tage Strampelplan, fünf Tage Ullaub-Zone: Genf → Avignon 2027.",
   openGraph: {
-    title: "Auf der Spuren der Cols der Tour",
-    description: "Genf → Avignon 2027: 900 km, 17.000 Höhenmeter, 14 Cols.",
-    images: [{ url: "/og.png", width: 1792, height: 896, alt: "Alpenstraße für die Genf–Avignon-Rennradtour" }],
+    title: "Ullaub – Tour des Cols",
+    description: "Genf → Avignon 2027: zehn Tage Strampelplan, fünf Tage Ullaub-Zone und 14 Cols.",
+    images: [{ url: "/og.png", width: 1774, height: 887, alt: "Ullaub – Tour des Cols: Genf nach Avignon 2027" }],
   },
   twitter: { card: "summary_large_image" },
 };

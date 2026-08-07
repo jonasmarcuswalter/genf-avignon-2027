@@ -44,7 +44,7 @@ export default function RouteMap({ stops }: { stops: Stop[] }) {
         .filter(([lat, lon]) => Number.isFinite(lat) && Number.isFinite(lon));
 
       const line = L.polyline(points, {
-        color: "#ed6d3b",
+        color: "#ff5b4d",
         weight: 4,
         opacity: 0.94,
         lineJoin: "round",
