@@ -23,6 +23,7 @@ type Col = {
   km: string;
   gain: string;
   grade: string;
+  profile: string;
   url: string;
 };
 
@@ -59,20 +60,20 @@ const stages: Stage[] = [
 ];
 
 const cols: Col[] = [
-  { name: "Col de Tamié", side: "Nordauffahrt von Faverges", day: "T1", km: "9,9", gain: "406", grade: "4,1", url: "https://www.quaeldich.de/paesse/col-de-tamie/profile/nordauffahrt-von-faverges/" },
-  { name: "Col de la Madeleine", side: "Nordrampe von Feissons", day: "T2", km: "27,5", gain: "1.582", grade: "5,8", url: "https://www.quaeldich.de/paesse/col-de-la-madeleine/profile/nordrampe-von-feissons/" },
-  { name: "Col du Glandon", side: "Nordrampe von La Chambre", day: "T2–3", km: "24,0", gain: "1.483", grade: "6,2", url: "https://www.quaeldich.de/paesse/col-du-glandon/profile/nordrampe-von-la-chambre/" },
-  { name: "Alpe d’Huez", side: "Auffahrt von Bourg d’Oisans", day: "T3", km: "13,4", gain: "1.132", grade: "8,4", url: "https://www.quaeldich.de/paesse/alpe-d-huez/profile/auffahrt-von-bourg-d-oisans/" },
-  { name: "Col de Sarenne", side: "Westanfahrt von Bourg d’Oisans", day: "T3", km: "22,4", gain: "1.429", grade: "6,4", url: "https://www.quaeldich.de/paesse/col-de-sarenne/profile/westanfahrt-von-bourg-d-oisans/" },
-  { name: "Col du Lautaret", side: "Westauffahrt von Les Clapiers", day: "T4", km: "35,0", gain: "1.340", grade: "3,8", url: "https://www.quaeldich.de/paesse/col-du-lautaret/profile/westauffahrt-von-les-clapiers/" },
-  { name: "Col du Galibier", side: "Südrampe vom Col du Lautaret", day: "T4", km: "8,6", gain: "597", grade: "6,9", url: "https://www.quaeldich.de/paesse/col-du-galibier/profile/suedrampe-vom-col-du-lautaret/" },
-  { name: "Col du Télégraphe", side: "Südanfahrt von Valloire", day: "T4", km: "4,9", gain: "176", grade: "3,6", url: "https://www.quaeldich.de/paesse/col-du-telegraphe/profile/suedanfahrt-von-valloire/" },
-  { name: "Col du Mont Cenis", side: "Nordanfahrt von Lanslebourg", day: "T5", km: "9,8", gain: "682", grade: "7,0", url: "https://www.quaeldich.de/paesse/col-du-mont-cenis/profile/nordanfahrt-von-lanslebourg/" },
-  { name: "Col de Montgenèvre", side: "Ostauffahrt von Cesana Torinese", day: "T5", km: "9,3", gain: "524", grade: "5,6", url: "https://www.quaeldich.de/paesse/col-de-montgenevre/profile/ostauffahrt-von-cesena-torinese/" },
-  { name: "Col d’Izoard", side: "Nordrampe von Briançon", day: "T6", km: "19,2", gain: "1.211", grade: "6,3", url: "https://www.quaeldich.de/paesse/col-d-izoard/profile/nordrampe-von-briancon/" },
-  { name: "Col de Vars", side: "Nordrampe von Guillestre", day: "T6", km: "19,0", gain: "1.109", grade: "5,8", url: "https://www.quaeldich.de/paesse/col-de-vars/profile/nordrampe-von-guillestre/" },
-  { name: "Col de la Cayolle", side: "Nordrampe von Barcelonnette", day: "T7", km: "30,0", gain: "1.190", grade: "4,0", url: "https://www.quaeldich.de/paesse/col-de-la-cayolle/profile/nordrampe-von-barcelonnette/" },
-  { name: "Mont Ventoux", side: "Südrampe von Bédoin", day: "T10", km: "21,2", gain: "1.599", grade: "7,5", url: "https://www.quaeldich.de/paesse/mont-ventoux/profile/suedrampe-von-bedoin/" },
+  { name: "Col de Tamié", side: "Nordauffahrt von Faverges", day: "T1", km: "9,9", gain: "406", grade: "4,1", profile: "0% 91%, 12% 87%, 21% 74%, 32% 78%, 43% 56%, 55% 60%, 68% 42%, 80% 31%, 100% 17%, 100% 100%, 0% 100%", url: "https://www.quaeldich.de/paesse/col-de-tamie/profile/nordauffahrt-von-faverges/" },
+  { name: "Col de la Madeleine", side: "Nordrampe von Feissons", day: "T2", km: "27,5", gain: "1.582", grade: "5,8", profile: "0% 93%, 11% 89%, 20% 83%, 30% 74%, 40% 69%, 49% 55%, 60% 52%, 70% 36%, 82% 27%, 100% 9%, 100% 100%, 0% 100%", url: "https://www.quaeldich.de/paesse/col-de-la-madeleine/profile/nordrampe-von-feissons/" },
+  { name: "Col du Glandon", side: "Nordrampe von La Chambre", day: "T2–3", km: "24,0", gain: "1.483", grade: "6,2", profile: "0% 94%, 10% 90%, 19% 80%, 31% 81%, 42% 61%, 52% 57%, 64% 45%, 73% 25%, 85% 30%, 100% 7%, 100% 100%, 0% 100%", url: "https://www.quaeldich.de/paesse/col-du-glandon/profile/nordrampe-von-la-chambre/" },
+  { name: "Alpe d’Huez", side: "Auffahrt von Bourg d’Oisans", day: "T3", km: "13,4", gain: "1.132", grade: "8,4", profile: "0% 94%, 9% 88%, 19% 78%, 29% 66%, 39% 58%, 50% 43%, 60% 37%, 70% 25%, 82% 17%, 100% 5%, 100% 100%, 0% 100%", url: "https://www.quaeldich.de/paesse/alpe-d-huez/profile/auffahrt-von-bourg-d-oisans/" },
+  { name: "Col de Sarenne", side: "Westanfahrt von Bourg d’Oisans", day: "T3", km: "22,4", gain: "1.429", grade: "6,4", profile: "0% 94%, 10% 82%, 20% 76%, 31% 82%, 42% 59%, 54% 51%, 65% 35%, 75% 45%, 86% 22%, 100% 8%, 100% 100%, 0% 100%", url: "https://www.quaeldich.de/paesse/col-de-sarenne/profile/westanfahrt-von-bourg-d-oisans/" },
+  { name: "Col du Lautaret", side: "Westauffahrt von Les Clapiers", day: "T4", km: "35,0", gain: "1.340", grade: "3,8", profile: "0% 94%, 14% 90%, 29% 82%, 41% 72%, 54% 66%, 66% 55%, 79% 43%, 89% 28%, 100% 17%, 100% 100%, 0% 100%", url: "https://www.quaeldich.de/paesse/col-du-lautaret/profile/westauffahrt-von-les-clapiers/" },
+  { name: "Col du Galibier", side: "Südrampe vom Col du Lautaret", day: "T4", km: "8,6", gain: "597", grade: "6,9", profile: "0% 93%, 9% 86%, 19% 78%, 31% 68%, 42% 61%, 52% 48%, 63% 40%, 75% 24%, 87% 19%, 100% 5%, 100% 100%, 0% 100%", url: "https://www.quaeldich.de/paesse/col-du-galibier/profile/suedrampe-vom-col-du-lautaret/" },
+  { name: "Col du Télégraphe", side: "Südanfahrt von Valloire", day: "T4", km: "4,9", gain: "176", grade: "3,6", profile: "0% 93%, 15% 87%, 27% 80%, 40% 74%, 54% 62%, 67% 55%, 80% 42%, 100% 28%, 100% 100%, 0% 100%", url: "https://www.quaeldich.de/paesse/col-du-telegraphe/profile/suedanfahrt-von-valloire/" },
+  { name: "Col du Mont Cenis", side: "Nordanfahrt von Lanslebourg", day: "T5", km: "9,8", gain: "682", grade: "7,0", profile: "0% 94%, 10% 87%, 20% 71%, 31% 65%, 42% 68%, 53% 48%, 64% 38%, 75% 41%, 87% 20%, 100% 7%, 100% 100%, 0% 100%", url: "https://www.quaeldich.de/paesse/col-du-mont-cenis/profile/nordanfahrt-von-lanslebourg/" },
+  { name: "Col de Montgenèvre", side: "Ostauffahrt von Cesana Torinese", day: "T5", km: "9,3", gain: "524", grade: "5,6", profile: "0% 92%, 12% 86%, 24% 76%, 38% 70%, 49% 54%, 61% 51%, 75% 34%, 87% 28%, 100% 12%, 100% 100%, 0% 100%", url: "https://www.quaeldich.de/paesse/col-de-montgenevre/profile/ostauffahrt-von-cesena-torinese/" },
+  { name: "Col d’Izoard", side: "Nordrampe von Briançon", day: "T6", km: "19,2", gain: "1.211", grade: "6,3", profile: "0% 94%, 10% 87%, 20% 74%, 31% 70%, 42% 56%, 52% 49%, 63% 36%, 73% 20%, 84% 23%, 100% 7%, 100% 100%, 0% 100%", url: "https://www.quaeldich.de/paesse/col-d-izoard/profile/nordrampe-von-briancon/" },
+  { name: "Col de Vars", side: "Nordrampe von Guillestre", day: "T6", km: "19,0", gain: "1.109", grade: "5,8", profile: "0% 94%, 10% 82%, 22% 75%, 32% 63%, 43% 66%, 54% 47%, 65% 51%, 76% 32%, 87% 26%, 100% 9%, 100% 100%, 0% 100%", url: "https://www.quaeldich.de/paesse/col-de-vars/profile/nordrampe-von-guillestre/" },
+  { name: "Col de la Cayolle", side: "Nordrampe von Barcelonnette", day: "T7", km: "30,0", gain: "1.190", grade: "4,0", profile: "0% 95%, 12% 89%, 25% 80%, 38% 75%, 50% 60%, 63% 54%, 75% 39%, 88% 27%, 100% 14%, 100% 100%, 0% 100%", url: "https://www.quaeldich.de/paesse/col-de-la-cayolle/profile/nordrampe-von-barcelonnette/" },
+  { name: "Mont Ventoux", side: "Südrampe von Bédoin", day: "T10", km: "21,2", gain: "1.599", grade: "7,5", profile: "0% 95%, 9% 91%, 18% 81%, 29% 75%, 39% 58%, 50% 45%, 60% 35%, 70% 21%, 80% 18%, 90% 10%, 100% 5%, 100% 100%, 0% 100%", url: "https://www.quaeldich.de/paesse/mont-ventoux/profile/suedrampe-von-bedoin/" },
 ];
 
 const basecampRides: BasecampRide[] = [
@@ -212,7 +213,7 @@ export default function Home() {
       <section className="cols-section" id="cols">
         <div className="shell"><div className="section-heading cols-heading"><div><p className="eyebrow">04 · All-inclusive-Höhenmeter</p><h2>Die Cols.<br />Sonnencreme reicht nicht.</h2></div><p className="section-copy">Alle Auffahrten mit den exakten Quäldich-Zahlen. Ein Klick führt direkt zum Höhenprofil — für Vorfreude, Nervosität und Gangwahl.</p></div>
           <div className="col-grid">
-            {cols.map((col) => <a className={`col-card ${col.name === "Alpe d’Huez" || col.name === "Mont Ventoux" ? "featured" : ""}`} href={col.url} target="_blank" rel="noreferrer" key={col.name}><div className="col-card-head"><span>{col.day}</span><b>{col.name}</b><i>↗</i></div><p>{col.side}</p><div className="col-stats"><span><strong>{col.km}</strong> km</span><span><strong>+{col.gain}</strong> hm</span><span><strong>Ø {col.grade}</strong> %</span></div></a>)}
+            {cols.map((col) => <a className={`col-card ${col.name === "Alpe d’Huez" || col.name === "Mont Ventoux" ? "featured" : ""}`} href={col.url} target="_blank" rel="noreferrer" key={col.name}><div className="col-card-head"><span>{col.day}</span><b>{col.name}</b><i>↗</i></div><p>{col.side}</p><div className="climb-profile" role="img" aria-label={`Stilisiertes Höhenprofil für ${col.name}`}><span>HÖHENPROFIL</span><i className="profile-fill" style={{ clipPath: `polygon(${col.profile})` }} /><i className="profile-shade" style={{ clipPath: `polygon(${col.profile})` }} /><i className="profile-sun" /></div><div className="col-stats"><span><strong>{col.km}</strong> km</span><span><strong>+{col.gain}</strong> hm</span><span><strong>Ø {col.grade}</strong> %</span></div></a>)}
           </div>
         </div>
       </section>
