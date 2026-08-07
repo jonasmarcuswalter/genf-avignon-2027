@@ -20,7 +20,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <Script id="reset-initial-scroll" strategy="beforeInteractive">{`
           (() => {
-            if (window.location.hash) return;
+            if (window.location.hash) {
+              window.history.replaceState(
+                window.history.state,
+                "",
+                window.location.pathname + window.location.search,
+              );
+            }
 
             if ("scrollRestoration" in window.history) {
               window.history.scrollRestoration = "manual";
