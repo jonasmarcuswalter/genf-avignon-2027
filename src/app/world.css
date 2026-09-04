@@ -1,0 +1,2691 @@
+/*
+ * ULLAUB / Tour des Cols
+ * A living alpine roadbook: part resort broadcast, part folded map,
+ * part passport stamped on the way from Geneva to Avignon.
+ */
+
+.ullaub-world {
+  background: var(--paper);
+  color: var(--ink-deep);
+  overflow: clip;
+}
+
+.ullaub-world .shell {
+  max-width: 1440px;
+}
+
+.ullaub-world :focus-visible {
+  box-shadow: 0 0 0 6px var(--sun);
+  outline: 3px solid var(--ink-deep);
+  outline-offset: 3px;
+}
+
+.ullaub-world button {
+  border-radius: 0;
+}
+
+.tour-progress {
+  bottom: 25px;
+  height: calc(100vh - 50px);
+  pointer-events: none;
+  position: fixed;
+  right: 14px;
+  top: 25px;
+  width: 3px;
+  z-index: 1200;
+}
+
+.tour-progress i,
+.tour-progress span {
+  inset: 0;
+  position: absolute;
+}
+
+.tour-progress i {
+  background: rgb(255 240 201 / 28%);
+}
+
+.tour-progress span {
+  background: var(--coral);
+  box-shadow: 0 0 0 1px rgb(7 30 59 / 60%);
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+/* Hero: the departure board is the interface, the moving poster is the story. */
+
+.hero-broadcast {
+  --hero-key-turn: 8deg;
+  --hero-key-y: 0px;
+  --hero-media-scale: 1;
+  --hero-media-y: 0px;
+  --hero-title-y: 0px;
+}
+
+.hero-broadcast .hotel-key {
+  transform: translate3d(0, var(--hero-key-y), 0) rotate(var(--hero-key-turn));
+  will-change: transform;
+}
+
+.hero-broadcast .hotel-key:hover {
+  transform: translate3d(0, var(--hero-key-y), 0) rotate(calc(var(--hero-key-turn) - 6deg)) scale(1.04);
+}
+
+.hero-broadcast .hero-title-lockup {
+  transform: translate3d(0, var(--hero-title-y), 0);
+  will-change: transform;
+}
+
+.hero-broadcast .hero-media {
+  transform: translate3d(0, var(--hero-media-y), 0) scale(var(--hero-media-scale));
+  transform-origin: center bottom;
+  will-change: transform;
+}
+
+.hero-broadcast .nav {
+  border-bottom: 1px solid rgb(255 240 201 / 34%);
+}
+
+.hero-broadcast .wordmark,
+.hero-broadcast .nav-links a,
+.hero-broadcast .edition {
+  color: var(--cream);
+}
+
+.hero-broadcast .wordmark small {
+  border-color: var(--cream);
+}
+
+.hero-broadcast .edition {
+  background: transparent;
+  border-color: var(--cream);
+  box-shadow: none;
+}
+
+.hero-broadcast .nav-links a:hover {
+  color: var(--sun);
+}
+
+.hero-broadcast .button-primary {
+  border-color: var(--sun);
+  box-shadow: none;
+}
+
+.hero-broadcast .button-primary:hover {
+  background: var(--cream);
+}
+
+.hero-broadcast .hero-media img {
+  object-position: 48% 50%;
+}
+
+/*
+ * The tour physically assembles while scrolling. One image is split into
+ * three true slices; once they lock, the route draws and the message lands.
+ */
+
+.tour-assembly {
+  --tile-a: 0;
+  --tile-a-x: -58vw;
+  --tile-a-y: -16vh;
+  --tile-a-r: -8deg;
+  --tile-b: 0;
+  --tile-b-y: 62vh;
+  --tile-b-scale: .82;
+  --tile-c: 0;
+  --tile-c-x: 58vw;
+  --tile-c-y: -13vh;
+  --tile-c-r: 9deg;
+  --route: 0;
+  --route-dash: 1100px;
+  --assembly-copy: 0;
+  --assembly-copy-y: 38px;
+  background: #071e3b;
+  color: var(--cream);
+  height: 285vh;
+  position: relative;
+}
+
+.assembly-scroll-marker {
+  height: 1px;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  width: 1px;
+}
+
+.assembly-scroll-marker.is-mid {
+  top: 32.5%;
+}
+
+.assembly-scroll-marker.is-finish {
+  top: 65%;
+}
+
+.assembly-sticky {
+  align-content: center;
+  display: grid;
+  height: 100svh;
+  left: 0;
+  overflow: hidden;
+  padding: 34px clamp(20px, 4vw, 64px) 30px;
+  position: sticky;
+  top: 0;
+}
+
+.assembly-topline {
+  align-self: start;
+  display: flex;
+  font-size: 8px;
+  font-weight: 900;
+  justify-content: space-between;
+  letter-spacing: .16em;
+  margin-bottom: 22px;
+  text-transform: uppercase;
+}
+
+.assembly-topline span:first-child {
+  color: var(--sun);
+}
+
+.assembly-frame {
+  aspect-ratio: 16 / 9;
+  border: 1px solid rgb(255 240 201 / 58%);
+  justify-self: center;
+  max-height: 72vh;
+  max-width: 1180px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.assembly-frame::before,
+.assembly-frame::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  z-index: 8;
+}
+
+.assembly-frame::before {
+  border: 1px solid rgb(255 240 201 / 52%);
+  inset: 12px;
+}
+
+.assembly-frame::after {
+  background: var(--coral);
+  height: 7px;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+
+.assembly-panel {
+  bottom: 0;
+  opacity: max(.12, var(--tile-a));
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 33.334%;
+  will-change: transform;
+}
+
+.assembly-panel::after {
+  background: rgb(255 240 201 / 72%);
+  bottom: 0;
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1px;
+}
+
+.assembly-panel img {
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  width: 300%;
+}
+
+.panel-a {
+  left: 0;
+  opacity: max(.12, var(--tile-a));
+  transform: translate3d(var(--tile-a-x), var(--tile-a-y), 0) rotate(var(--tile-a-r));
+  transform-origin: right bottom;
+}
+
+.panel-a img {
+  left: 0;
+}
+
+.panel-b {
+  left: 33.333%;
+  opacity: max(.12, var(--tile-b));
+  transform: translate3d(0, var(--tile-b-y), 0) scale(var(--tile-b-scale));
+  transform-origin: center bottom;
+}
+
+.panel-b img {
+  left: -100%;
+}
+
+.panel-c {
+  left: 66.666%;
+  opacity: max(.12, var(--tile-c));
+  transform: translate3d(var(--tile-c-x), var(--tile-c-y), 0) rotate(var(--tile-c-r));
+  transform-origin: left bottom;
+}
+
+.panel-c img {
+  left: -200%;
+}
+
+.assembly-route {
+  height: 100%;
+  inset: 0;
+  opacity: var(--route);
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  z-index: 4;
+}
+
+.assembly-route path {
+  fill: none;
+  filter: drop-shadow(0 0 4px rgb(7 30 59 / 70%));
+  stroke: var(--coral);
+  stroke-dasharray: 1100px;
+  stroke-dashoffset: var(--route-dash);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 8;
+  vector-effect: non-scaling-stroke;
+}
+
+.assembly-copy {
+  align-items: end;
+  background: var(--cream);
+  bottom: 28px;
+  color: var(--ink-deep);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  left: 28px;
+  opacity: var(--assembly-copy);
+  padding: 16px 20px 14px;
+  position: absolute;
+  right: 28px;
+  transform: translateY(var(--assembly-copy-y));
+  z-index: 6;
+}
+
+.assembly-copy p {
+  color: var(--coral-deep);
+  font-size: 8px;
+  font-weight: 900;
+  grid-column: 1 / -1;
+  letter-spacing: .16em;
+  margin: 0 0 9px;
+}
+
+.assembly-copy h2 {
+  align-items: center;
+  display: flex;
+  font-size: clamp(38px, 5.2vw, 78px);
+  gap: clamp(12px, 2vw, 30px);
+  letter-spacing: -.05em;
+  line-height: .78;
+  margin: 0;
+}
+
+.assembly-copy h2 i {
+  color: var(--coral);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+}
+
+.assembly-copy strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(14px, 1.4vw, 20px);
+  font-style: italic;
+  font-weight: 400;
+  justify-self: end;
+}
+
+.assembly-instruction {
+  align-items: center;
+  align-self: end;
+  display: flex;
+  font-size: 8px;
+  font-weight: 900;
+  gap: 10px;
+  justify-self: center;
+  letter-spacing: .14em;
+  margin: 20px 0 0;
+  text-transform: uppercase;
+}
+
+.assembly-instruction span {
+  color: var(--sun);
+  font-size: 18px;
+}
+
+/* Shared editorial headings. */
+
+.chapter-number {
+  color: var(--coral);
+  font-family: Impact, "Arial Narrow", "Arial Black", sans-serif;
+  font-size: clamp(86px, 10vw, 156px);
+  letter-spacing: -.07em;
+  line-height: .72;
+  margin: 0;
+}
+
+.route-heading,
+.roadbook-masthead {
+  align-items: end;
+  display: grid;
+  gap: clamp(28px, 4vw, 74px);
+  grid-template-columns: auto minmax(0, 1fr) minmax(260px, .56fr);
+}
+
+.route-heading h2,
+.roadbook-masthead h2,
+.resort-title h2,
+.cols-intro h2,
+.closing-copy h2 {
+  font-size: clamp(66px, 8.5vw, 132px);
+  letter-spacing: -.065em;
+  line-height: .74;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.route-heading h2 em,
+.roadbook-masthead h2 em,
+.resort-title h2 em,
+.cols-intro h2 em,
+.closing-copy h2 em {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: .72em;
+  font-weight: 400;
+  letter-spacing: -.065em;
+  text-transform: none;
+}
+
+/* Chapter 01 / folded route map. */
+
+.route-broadcast {
+  --map-fold: 42%;
+  --map-r: -1.8deg;
+  --map-reveal: 0;
+  --map-y: 74px;
+  --route-heading-x: -110px;
+  --route-reveal: 0;
+  --route-stamp-turn: -34deg;
+  --route-stamp-y: -190px;
+  background: var(--paper);
+  padding: clamp(96px, 11vw, 168px) 0 0;
+  position: relative;
+}
+
+.route-broadcast::before {
+  background: var(--coral);
+  content: "";
+  height: 2px;
+  left: 0;
+  position: absolute;
+  top: 49px;
+  width: 12vw;
+}
+
+.route-heading {
+  opacity: max(.16, var(--route-reveal));
+  padding-bottom: 72px;
+  transform: translate3d(var(--route-heading-x), 0, 0);
+  will-change: opacity, transform;
+}
+
+.route-heading h2 {
+  color: var(--ink-deep);
+}
+
+.route-heading h2 em {
+  color: var(--coral-deep);
+}
+
+.route-heading .section-copy {
+  color: var(--ink-deep);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.55;
+  max-width: 370px;
+}
+
+.route-stage {
+  min-height: 0;
+  padding-bottom: 82px;
+  position: relative;
+}
+
+.route-stage .map-frame {
+  background: var(--ink-deep);
+  border: 3px solid var(--ink-deep);
+  height: 620px;
+  margin-left: 0;
+  overflow: hidden;
+  clip-path: inset(0 var(--map-fold));
+  opacity: max(.12, var(--map-reveal));
+  transform: translate3d(0, var(--map-y), 0) rotate(var(--map-r));
+  transform-origin: center top;
+  will-change: clip-path, opacity, transform;
+  width: 100%;
+}
+
+.route-stage .route-map {
+  height: 100%;
+}
+
+.route-map-shell {
+  height: 100%;
+  position: relative;
+}
+
+.route-map-error {
+  background: var(--cream);
+  border: 2px solid var(--ink-deep);
+  color: var(--ink-deep);
+  font-size: 12px;
+  font-weight: 800;
+  left: 50%;
+  margin: 0;
+  max-width: 330px;
+  padding: 14px 16px;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 600;
+}
+
+.route-broadcast .leaflet-tile-pane {
+  filter: sepia(.36) saturate(.72) hue-rotate(148deg) brightness(.92) contrast(1.08);
+}
+
+.route-broadcast .leaflet-control-attribution {
+  background: rgb(255 248 232 / 88%) !important;
+  color: var(--ink-deep) !important;
+  font-size: 8px !important;
+}
+
+.route-broadcast .leaflet-control-attribution a {
+  color: var(--coral-deep) !important;
+}
+
+.route-broadcast .stage-marker {
+  background: var(--cream);
+  border: 2px solid var(--ink-deep);
+  border-radius: 50%;
+  box-shadow: 2px 2px 0 var(--ink-deep);
+  color: var(--ink-deep);
+  transition: background .16s ease, color .16s ease, transform .16s ease;
+}
+
+.route-broadcast .stage-marker.is-active {
+  background: var(--coral);
+  color: var(--cream);
+  transform: scale(1.32);
+}
+
+.route-broadcast .map-key {
+  background: var(--cream);
+  border: 0;
+  bottom: 0;
+  box-shadow: none;
+  left: 0;
+  padding: 13px 16px;
+}
+
+.route-annotation {
+  background: var(--sun);
+  border: 2px solid var(--ink-deep);
+  bottom: 118px;
+  color: var(--coral-deep);
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 30px;
+  line-height: .82;
+  margin: 0;
+  padding: 16px 22px;
+  position: absolute;
+  right: 52px;
+  text-align: center;
+  transform: translate3d(0, var(--route-stamp-y), 0) rotate(var(--route-stamp-turn));
+  transform-origin: center;
+  will-change: transform;
+  z-index: 500;
+}
+
+.route-annotation span {
+  color: var(--ink-deep);
+  font-family: Arial, sans-serif;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .12em;
+}
+
+.journey-checkpoints {
+  border-bottom: 2px solid var(--ink-deep);
+  border-top: 2px solid var(--ink-deep);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.journey-checkpoints a {
+  border-right: 2px solid var(--ink-deep);
+  display: grid;
+  min-height: 128px;
+  padding: 24px 28px;
+  text-decoration: none;
+  transition: background .16s ease, color .16s ease;
+}
+
+.journey-checkpoints a:last-child {
+  border-right: 0;
+}
+
+.journey-checkpoints a:hover,
+.journey-checkpoints a.is-active {
+  background: var(--sun);
+}
+
+.journey-checkpoints small {
+  color: var(--coral-deep);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .14em;
+}
+
+.journey-checkpoints b {
+  align-self: end;
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(22px, 2vw, 31px);
+  letter-spacing: -.035em;
+  line-height: .92;
+  text-transform: uppercase;
+}
+
+.journey-checkpoints span {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  margin-top: 7px;
+  text-transform: uppercase;
+}
+
+/* Chapter 02 / roadbook. */
+
+.stage-roadbook {
+  --rest-scale: .22;
+  --rest-turn: -190deg;
+  --stage-detail-x: 140px;
+  --stage-image-r: -9deg;
+  --stage-image-x: -140px;
+  --stage-reveal: 0;
+  --stage-rider-turn: -18deg;
+  --stage-rider-x: -24vw;
+  --stage-rider-y: 46px;
+  background: var(--ink-deep);
+  color: var(--cream);
+  overflow: hidden;
+  padding: clamp(105px, 12vw, 180px) 0 140px;
+  position: relative;
+}
+
+.stage-rider {
+  align-items: center;
+  color: var(--sun);
+  display: flex;
+  filter: drop-shadow(7px 7px 0 var(--coral));
+  gap: 12px;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: clamp(150px, 18vw, 265px);
+  transform: translate3d(var(--stage-rider-x), var(--stage-rider-y), 0) rotate(var(--stage-rider-turn));
+  will-change: transform;
+  z-index: 8;
+}
+
+.stage-rider span {
+  font-size: clamp(74px, 8vw, 128px);
+  line-height: 1;
+}
+
+.stage-rider b {
+  background: var(--sun);
+  color: var(--ink-deep);
+  font-size: 9px;
+  letter-spacing: .13em;
+  padding: 8px 10px;
+}
+
+.roadbook-masthead {
+  padding-bottom: 72px;
+}
+
+.roadbook-masthead .chapter-number {
+  color: var(--sun);
+}
+
+.roadbook-masthead .eyebrow {
+  color: var(--sun);
+}
+
+.roadbook-masthead h2 em {
+  color: var(--pool);
+}
+
+.roadbook-masthead > p:last-child {
+  color: var(--cream);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  line-height: 1.58;
+  margin: 0;
+  max-width: 360px;
+}
+
+.stage-run {
+  align-items: stretch;
+  border-bottom: 1px solid rgb(255 240 201 / 45%);
+  border-top: 1px solid rgb(255 240 201 / 45%);
+  display: grid;
+  gap: 0;
+  grid-template-columns: minmax(0, 1fr) 172px minmax(0, 1fr);
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.stage-day-group {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.stage-day-group button {
+  background: transparent;
+  border: 0;
+  border-right: 1px solid rgb(255 240 201 / 32%);
+  color: var(--cream);
+  cursor: pointer;
+  display: grid;
+  min-height: 130px;
+  padding: 18px 9px 15px;
+  text-align: left;
+}
+
+.stage-day-group button > span {
+  color: var(--coral);
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 36px;
+  letter-spacing: -.04em;
+  line-height: 1;
+}
+
+.stage-day-group button small {
+  align-self: end;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: .075em;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+
+.stage-day-group button:hover,
+.stage-day-group button.is-selected {
+  background: var(--coral);
+  color: var(--ink-deep);
+}
+
+.stage-day-group button:hover > span,
+.stage-day-group button.is-selected > span {
+  color: var(--cream);
+}
+
+.rest-stamp {
+  align-content: center;
+  background: var(--sun);
+  color: var(--ink-deep);
+  display: grid;
+  justify-items: center;
+  padding: 14px;
+  position: relative;
+  text-align: center;
+  transform: rotate(var(--rest-turn)) scale(var(--rest-scale));
+  transform-origin: center;
+  will-change: transform;
+  z-index: 2;
+}
+
+.rest-stamp::after {
+  border: 2px dashed var(--ink-deep);
+  content: "";
+  inset: 7px;
+  pointer-events: none;
+  position: absolute;
+}
+
+.rest-stamp span,
+.rest-stamp small {
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.rest-stamp strong {
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 24px;
+  letter-spacing: -.025em;
+  line-height: .86;
+  margin: 6px 0;
+}
+
+.stage-spread {
+  align-items: start;
+  display: grid;
+  gap: clamp(38px, 6vw, 88px);
+  grid-template-columns: minmax(320px, .82fr) minmax(400px, 1fr);
+  padding-top: 94px;
+}
+
+.stage-portrait {
+  border: 10px solid var(--cream);
+  height: 760px;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  opacity: max(.12, var(--stage-reveal));
+  transform: translate3d(var(--stage-image-x), 0, 0) rotate(var(--stage-image-r));
+  transform-origin: center bottom;
+  will-change: opacity, transform;
+}
+
+.stage-portrait img {
+  height: 100%;
+  object-fit: cover;
+  object-position: 30% 50%;
+  width: 100%;
+}
+
+.stage-portrait figcaption {
+  background: var(--coral);
+  bottom: 22px;
+  color: var(--cream);
+  display: grid;
+  left: -1px;
+  padding: 12px 18px;
+  position: absolute;
+  transform: rotate(2deg);
+}
+
+.stage-portrait figcaption b {
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 24px;
+  letter-spacing: -.02em;
+}
+
+.stage-portrait figcaption span {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 12px;
+}
+
+.stage-roadbook .stage-detail {
+  background: transparent;
+  border: 0;
+  border-left: 3px solid var(--coral);
+  box-shadow: none;
+  color: var(--cream);
+  min-height: 680px;
+  padding: 8px 0 0 clamp(28px, 4vw, 58px);
+  position: relative;
+  top: auto;
+  opacity: max(.12, var(--stage-reveal));
+  transform: translate3d(var(--stage-detail-x), 0, 0);
+  will-change: opacity, transform;
+}
+
+.stage-roadbook .stage-detail.is-warm {
+  background: transparent;
+  border-color: var(--sun);
+  box-shadow: none;
+}
+
+.stage-roadbook .stage-detail-top {
+  border-bottom: 1px solid rgb(255 240 201 / 38%);
+  padding-bottom: 16px;
+}
+
+.stage-roadbook .stage-detail-top span,
+.stage-roadbook .stage-detail.is-warm .stage-detail-top span {
+  color: var(--sun);
+}
+
+.stage-roadbook .stage-detail-top small,
+.stage-roadbook .stage-detail.is-warm .stage-detail-top small {
+  color: var(--pool);
+}
+
+.stage-roadbook .stage-detail h3 {
+  color: var(--cream);
+  font-size: clamp(53px, 6.8vw, 96px);
+  line-height: .78;
+  margin: 57px 0 48px;
+  max-width: 720px;
+}
+
+.stage-roadbook .big-numbers,
+.stage-roadbook .stage-detail.is-warm .big-numbers {
+  border-color: rgb(255 240 201 / 38%);
+  grid-template-columns: 1fr 1fr;
+  padding: 23px 0;
+}
+
+.stage-roadbook .big-numbers b {
+  color: var(--cream);
+  font-size: clamp(44px, 5vw, 72px);
+}
+
+.stage-roadbook .big-numbers span,
+.stage-roadbook .detail-block small,
+.stage-roadbook .stage-detail.is-warm .big-numbers span,
+.stage-roadbook .stage-detail.is-warm .detail-block small {
+  color: var(--pool);
+}
+
+.stage-roadbook .detail-block {
+  max-width: 650px;
+  padding-top: 26px;
+}
+
+.stage-roadbook .detail-block p {
+  color: var(--cream);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.stage-roadbook .detail-block.booking,
+.stage-roadbook .stage-detail.is-warm .detail-block.booking {
+  border-color: rgb(255 240 201 / 38%);
+}
+
+.stage-controls {
+  align-items: center;
+  border-top: 1px solid rgb(255 240 201 / 38%);
+  display: grid;
+  grid-template-columns: 52px 1fr 52px;
+  margin-top: 34px;
+}
+
+.stage-controls button {
+  background: transparent;
+  border: 0;
+  color: var(--cream);
+  cursor: pointer;
+  font-size: 24px;
+  height: 52px;
+}
+
+.stage-controls button:hover {
+  background: var(--coral);
+}
+
+.stage-controls span {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .14em;
+  text-align: center;
+}
+
+/* Intermission / deliberately overcaffeinated carb-loading broadcast. */
+
+.carb-loader {
+  --bike-opacity: 0;
+  --bike-turn: -16deg;
+  --bike-x: -58vw;
+  --bike-y: 32vh;
+  --carb-final: 0;
+  --carb-final-y: 80px;
+  --carb-sun-scale: .08;
+  --carb-title-opacity: 0;
+  --carb-title-x: -115vw;
+  --coffee-opacity: 0;
+  --coffee-turn: 32deg;
+  --coffee-x: 72vw;
+  --coffee-y: -24vh;
+  --croissant-opacity: 0;
+  --croissant-turn: -45deg;
+  --croissant-x: -72vw;
+  --croissant-y: 18vh;
+  --ring-opacity: 0;
+  --ring-scale: .2;
+  --ring-turn: -210deg;
+  --ring-y: 88vh;
+  background: var(--coral);
+  color: var(--ink-deep);
+  height: 300vh;
+  position: relative;
+}
+
+.carb-sticky {
+  background: var(--coral);
+  height: 100svh;
+  overflow: hidden;
+  position: sticky;
+  top: 0;
+}
+
+.carb-grid {
+  background-image: linear-gradient(rgb(7 30 59 / 24%) 1px, transparent 1px), linear-gradient(90deg, rgb(7 30 59 / 24%) 1px, transparent 1px);
+  background-size: 48px 48px;
+  inset: 0;
+  opacity: .55;
+  position: absolute;
+}
+
+.carb-sun {
+  background: var(--sun);
+  border: 8px solid var(--cream);
+  border-radius: 50%;
+  height: 118vmin;
+  left: calc(50% - 59vmin);
+  position: absolute;
+  top: calc(50% - 59vmin);
+  transform: scale(var(--carb-sun-scale));
+  will-change: transform;
+  width: 118vmin;
+}
+
+.carb-channel {
+  background: var(--ink-deep);
+  color: var(--sun);
+  font-size: 9px;
+  font-weight: 900;
+  left: 0;
+  letter-spacing: .18em;
+  margin: 0;
+  padding: 13px 20px 11px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  z-index: 12;
+}
+
+.carb-title {
+  color: var(--ink-deep);
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(118px, 19vw, 282px);
+  left: 3vw;
+  letter-spacing: -.065em;
+  line-height: .64;
+  margin: 0;
+  opacity: var(--carb-title-opacity);
+  position: absolute;
+  text-transform: uppercase;
+  top: 17%;
+  transform: translate3d(var(--carb-title-x), 0, 0);
+  white-space: nowrap;
+  will-change: opacity, transform;
+  z-index: 2;
+}
+
+.carb-title span,
+.carb-title em {
+  display: block;
+}
+
+.carb-title em {
+  color: var(--cream);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: .5em;
+  font-weight: 400;
+  letter-spacing: -.05em;
+  margin-left: .55em;
+  margin-top: .23em;
+  text-transform: none;
+}
+
+.croissant-rocket,
+.coffee-orbit,
+.bike-zoom {
+  align-content: center;
+  display: grid;
+  justify-items: center;
+  pointer-events: none;
+  position: absolute;
+  will-change: opacity, transform;
+  z-index: 7;
+}
+
+.croissant-rocket {
+  background: var(--cream);
+  border: 5px solid var(--ink-deep);
+  box-shadow: 12px 12px 0 var(--ink-deep);
+  height: 245px;
+  left: calc(50% - 112px);
+  opacity: var(--croissant-opacity);
+  top: 30%;
+  transform: translate3d(var(--croissant-x), var(--croissant-y), 0) rotate(var(--croissant-turn));
+  width: 225px;
+}
+
+.croissant-rocket span,
+.coffee-orbit span {
+  font-size: 112px;
+  line-height: .9;
+}
+
+.croissant-rocket b,
+.coffee-orbit b,
+.bike-zoom b {
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 31px;
+  line-height: .9;
+}
+
+.croissant-rocket small,
+.coffee-orbit small {
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: .15em;
+}
+
+.coffee-orbit {
+  background: var(--pool);
+  border: 5px solid var(--ink-deep);
+  border-radius: 50%;
+  height: 230px;
+  left: calc(50% - 115px);
+  opacity: var(--coffee-opacity);
+  top: 31%;
+  transform: translate3d(var(--coffee-x), var(--coffee-y), 0) rotate(var(--coffee-turn));
+  width: 230px;
+}
+
+.bike-zoom {
+  color: var(--ink-deep);
+  filter: drop-shadow(13px 13px 0 var(--cream));
+  left: 0;
+  opacity: var(--bike-opacity);
+  top: 34%;
+  transform: translate3d(var(--bike-x), var(--bike-y), 0) rotate(var(--bike-turn));
+}
+
+.bike-zoom span {
+  font-size: clamp(150px, 20vw, 290px);
+  line-height: 1;
+}
+
+.bike-zoom b {
+  background: var(--ink-deep);
+  color: var(--sun);
+  font-size: clamp(23px, 3vw, 44px);
+  padding: 9px 18px;
+  transform: rotate(-5deg);
+}
+
+.pool-ring {
+  align-content: center;
+  background: var(--pool);
+  border: 24px solid var(--cream);
+  border-radius: 50%;
+  box-shadow: 0 0 0 6px var(--ink-deep), inset 0 0 0 5px var(--ink-deep);
+  display: grid;
+  height: 290px;
+  justify-items: center;
+  left: calc(50% - 145px);
+  opacity: var(--ring-opacity);
+  position: absolute;
+  top: calc(50% - 145px);
+  transform: translate3d(0, var(--ring-y), 0) rotate(var(--ring-turn)) scale(var(--ring-scale));
+  will-change: opacity, transform;
+  width: 290px;
+  z-index: 8;
+}
+
+.pool-ring::after {
+  border: 3px dashed var(--ink-deep);
+  border-radius: 50%;
+  content: "";
+  inset: 12px;
+  position: absolute;
+}
+
+.pool-ring span {
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 84px;
+  letter-spacing: -.05em;
+  line-height: .7;
+}
+
+.pool-ring small {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .18em;
+}
+
+.carb-finale {
+  align-content: center;
+  background: var(--cream);
+  border: 7px solid var(--ink-deep);
+  box-shadow: 18px 18px 0 var(--pool-deep);
+  display: grid;
+  inset: 10% 8%;
+  justify-items: center;
+  opacity: var(--carb-final);
+  padding: 40px;
+  position: absolute;
+  text-align: center;
+  transform: translate3d(0, var(--carb-final-y), 0) rotate(-1deg);
+  will-change: opacity, transform;
+  z-index: 10;
+}
+
+.carb-finale p {
+  color: var(--coral-deep);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .18em;
+  margin: 0 0 25px;
+}
+
+.carb-finale h2 {
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(100px, 17vw, 254px);
+  letter-spacing: -.06em;
+  line-height: .65;
+  margin: 0;
+}
+
+.carb-finale h2 em {
+  color: var(--coral);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: .5em;
+  font-weight: 400;
+}
+
+.carb-finale strong {
+  background: var(--sun);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(16px, 2vw, 28px);
+  font-style: italic;
+  font-weight: 400;
+  margin-top: 40px;
+  padding: 12px 18px;
+  transform: rotate(2deg);
+}
+
+/* Chapter 03 / the hotel intermission. */
+
+.resort-intermission {
+  --pool-turn: -110deg;
+  --resort-image-scale: 1.18;
+  --resort-image-y: -70px;
+  --resort-reveal: 0;
+  --resort-title-x: -120px;
+  background: var(--pool-deep);
+  color: var(--cream);
+  overflow: hidden;
+  padding: 0;
+}
+
+.resort-intermission::before {
+  display: none;
+}
+
+.resort-scene {
+  background: var(--sun);
+  display: grid;
+  grid-template-columns: minmax(330px, 40%) minmax(0, 60%);
+  min-height: 870px;
+  position: relative;
+}
+
+.resort-scene figure {
+  grid-column: 2;
+  height: 870px;
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.resort-scene figure img {
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  transform: translate3d(0, var(--resort-image-y), 0) scale(var(--resort-image-scale));
+  transform-origin: center;
+  will-change: transform;
+  width: 100%;
+}
+
+.resort-title {
+  align-content: center;
+  background: var(--sun);
+  color: var(--ink-deep);
+  display: grid;
+  grid-column: 1;
+  grid-row: 1;
+  padding: clamp(44px, 6vw, 94px);
+  position: relative;
+  opacity: max(.12, var(--resort-reveal));
+  transform: translate3d(var(--resort-title-x), 0, 0);
+  will-change: opacity, transform;
+  z-index: 2;
+}
+
+.resort-title::after {
+  border-bottom: 26px solid transparent;
+  border-left: 28px solid var(--sun);
+  border-top: 26px solid transparent;
+  content: "";
+  position: absolute;
+  right: -27px;
+  top: calc(50% - 26px);
+}
+
+.resort-title .eyebrow {
+  color: var(--coral-deep);
+}
+
+.resort-title h2 {
+  font-size: clamp(68px, 7.2vw, 114px);
+}
+
+.resort-title h2 em {
+  color: var(--coral-deep);
+}
+
+.resort-title > p:last-child {
+  border-top: 2px solid var(--ink-deep);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  line-height: 1.55;
+  margin: 39px 0 0;
+  max-width: 380px;
+  padding-top: 22px;
+}
+
+.pool-sign {
+  align-content: center;
+  background: var(--coral);
+  border: 3px solid var(--cream);
+  border-radius: 50%;
+  color: var(--cream);
+  display: grid;
+  height: 150px;
+  justify-items: center;
+  position: absolute;
+  right: 48px;
+  top: 48px;
+  transform: rotate(var(--pool-turn));
+  will-change: transform;
+  width: 150px;
+  z-index: 3;
+}
+
+.pool-sign::after {
+  border: 2px dashed var(--cream);
+  border-radius: 50%;
+  content: "";
+  inset: 8px;
+  position: absolute;
+}
+
+.pool-sign span,
+.pool-sign small {
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .14em;
+}
+
+.pool-sign b {
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 35px;
+  letter-spacing: -.03em;
+  line-height: .9;
+}
+
+.room-service {
+  display: grid;
+  gap: clamp(30px, 4vw, 60px);
+  grid-template-columns: minmax(220px, .55fr) minmax(210px, .48fr) minmax(400px, 1.2fr);
+  padding-bottom: 120px;
+  padding-top: 120px;
+}
+
+.room-service-head > span {
+  color: var(--sun);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .16em;
+}
+
+.room-service-head h3 {
+  color: var(--cream);
+  font-size: clamp(46px, 4.5vw, 66px);
+  line-height: .82;
+  margin: 32px 0 24px;
+}
+
+.room-service-head p {
+  color: var(--ink-deep);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.room-service .basecamp-options {
+  align-self: start;
+  border-color: rgb(255 240 201 / 48%);
+  margin: 0;
+}
+
+.room-service .basecamp-options button {
+  border-color: rgb(255 240 201 / 48%);
+  color: var(--cream);
+  grid-template-columns: 35px 1fr;
+  min-height: 118px;
+  padding: 19px 0;
+}
+
+.room-service .basecamp-options button:hover,
+.room-service .basecamp-options button.is-selected {
+  background: var(--sun);
+  color: var(--ink-deep);
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.room-service .basecamp-options span {
+  color: var(--coral);
+}
+
+.room-service .basecamp-options strong {
+  font-size: 27px;
+}
+
+.room-service .basecamp-options small {
+  color: var(--ink-deep);
+}
+
+.room-service .basecamp-options button.is-selected small,
+.room-service .basecamp-options button:hover small {
+  color: var(--ink-deep);
+}
+
+.room-service .basecamp-detail {
+  background: transparent;
+  border: 0;
+  border-left: 3px solid var(--sun);
+  box-shadow: none;
+  color: var(--cream);
+  min-height: 0;
+  padding: 0 0 0 clamp(28px, 3.5vw, 50px);
+}
+
+.room-service .basecamp-detail-top small,
+.room-service .basecamp-big-numbers span,
+.room-service .basecamp-copy small,
+.room-service .basecamp-meta span,
+.room-service .basecamp-meta p,
+.room-service .basecamp-link {
+  color: var(--ink-deep);
+}
+
+.room-service .basecamp-detail.is-finestre {
+  background: transparent;
+  box-shadow: none;
+}
+
+.room-service .basecamp-detail h3 {
+  font-size: clamp(54px, 6vw, 86px);
+  margin-top: 44px;
+}
+
+.room-service .basecamp-route {
+  color: var(--ink-deep);
+}
+
+.room-service .basecamp-big-numbers b {
+  font-size: 38px;
+}
+
+.room-service .basecamp-copy p {
+  color: var(--sun);
+}
+
+.room-service .basecamp-link {
+  color: var(--cream);
+}
+
+.room-service .basecamp-rule {
+  border-top: 1px solid rgb(255 240 201 / 45%);
+  color: var(--ink-deep);
+  font-family: Georgia, "Times New Roman", serif;
+  grid-column: 1 / -1;
+  margin: 8px 0 0;
+  padding-top: 23px;
+  text-align: right;
+}
+
+/* Chapter 04 / passport stamps, deliberately irregular. */
+
+.passport-section {
+  --cols-reveal: 0;
+  --cols-y: 120px;
+  background: var(--ink-deep);
+  color: var(--cream);
+  padding: 0 0 150px;
+}
+
+.cols-intro {
+  align-items: center;
+  display: grid;
+  gap: clamp(44px, 7vw, 100px);
+  grid-template-columns: minmax(310px, .78fr) minmax(390px, 1fr);
+  padding-bottom: 130px;
+  padding-top: 140px;
+}
+
+.cols-intro figure {
+  border: 9px solid var(--cream);
+  height: 690px;
+  margin: 0;
+  overflow: hidden;
+  transform: rotate(1deg);
+}
+
+.cols-elevation {
+  background: var(--sun);
+  border: 9px solid var(--cream);
+  color: var(--ink-deep);
+  height: 690px;
+  overflow: hidden;
+  position: relative;
+  opacity: max(.12, var(--cols-reveal));
+  transform: translate3d(0, var(--cols-y), 0) rotate(-1deg);
+  will-change: opacity, transform;
+}
+
+.col-bars {
+  align-items: end;
+  bottom: 0;
+  display: grid;
+  gap: 3px;
+  grid-template-columns: repeat(14, 1fr);
+  height: 79%;
+  left: 0;
+  padding: 0 27px 25px;
+  position: absolute;
+  right: 0;
+}
+
+.col-bars::before {
+  display: none;
+}
+
+.col-bars span {
+  background: var(--ink-deep);
+  min-height: 22%;
+  position: relative;
+  transform: scaleY(var(--cols-reveal));
+  transform-origin: center bottom;
+}
+
+.col-bars span:nth-child(3n + 1) {
+  background: var(--coral);
+}
+
+.col-bars span:nth-child(4n + 2) {
+  background: var(--pool-deep);
+}
+
+.col-bars span i {
+  bottom: 7px;
+  color: var(--cream);
+  font-size: 7px;
+  font-style: normal;
+  font-weight: 900;
+  left: 50%;
+  position: absolute;
+  transform: rotate(-90deg) translateY(-50%);
+  transform-origin: left bottom;
+  white-space: nowrap;
+}
+
+.elevation-caption {
+  align-items: end;
+  display: flex;
+  gap: 18px;
+  left: 27px;
+  position: absolute;
+  top: 25px;
+}
+
+.elevation-caption strong {
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 120px;
+  letter-spacing: -.07em;
+  line-height: .75;
+}
+
+.elevation-caption span {
+  color: var(--coral-deep);
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 29px;
+  line-height: .86;
+}
+
+.cols-intro img {
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  width: 100%;
+}
+
+.cols-intro .eyebrow {
+  color: var(--sun);
+}
+
+.cols-intro h2 {
+  color: var(--cream);
+}
+
+.cols-intro h2 em {
+  color: var(--pool);
+}
+
+.cols-intro .section-copy {
+  border-top: 1px solid rgb(255 240 201 / 46%);
+  color: var(--cream);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-weight: 400;
+  margin-top: 48px;
+  max-width: 560px;
+  padding-top: 23px;
+}
+
+.col-passport {
+  align-items: start;
+  display: grid;
+  gap: 36px 30px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.passport-section .col-card {
+  background: var(--cream);
+  border: 3px solid var(--cream);
+  box-shadow: 7px 7px 0 var(--coral);
+  color: var(--ink-deep);
+  min-height: 260px;
+  padding: 24px;
+  position: relative;
+  text-decoration: none;
+}
+
+.passport-section .col-card:hover {
+  background: var(--sun);
+  color: var(--ink-deep);
+  transform: rotate(0deg) translateY(-5px);
+}
+
+.passport-section .col-card.featured {
+  background: var(--coral);
+  border-color: var(--coral);
+  color: var(--ink-deep);
+  grid-column: span 2;
+}
+
+.passport-section .stamp-0 { transform: rotate(-.7deg); }
+.passport-section .stamp-1 { margin-top: 20px; transform: rotate(.8deg); }
+.passport-section .stamp-2 { transform: rotate(-.35deg); }
+.passport-section .stamp-3 { margin-top: -8px; transform: rotate(.55deg); }
+.passport-section .stamp-4 { margin-top: 14px; transform: rotate(-.9deg); }
+
+.passport-section .col-card-head {
+  grid-template-columns: auto minmax(0, 1fr) 18px;
+}
+
+.passport-section .col-card-head span {
+  color: var(--coral-deep);
+}
+
+.passport-section .featured .col-card-head span {
+  color: var(--ink-deep);
+}
+
+.passport-section .col-card-head b {
+  font-size: clamp(26px, 2.5vw, 38px);
+}
+
+.passport-section .col-card > p,
+.passport-section .featured > p {
+  color: var(--ink-deep);
+  margin-left: 0;
+}
+
+.passport-section .featured > p {
+  color: var(--ink-deep);
+}
+
+.passport-section .climb-profile,
+.passport-section .featured .climb-profile {
+  background: var(--pool);
+  border: 2px solid var(--ink-deep);
+  box-shadow: none;
+  margin-left: 0;
+  width: 100%;
+}
+
+.passport-section .climb-profile::before {
+  background: repeating-linear-gradient(90deg, transparent 0 22px, rgb(7 30 59 / 23%) 22px 23px), repeating-linear-gradient(0deg, transparent 0 16px, rgb(7 30 59 / 18%) 16px 17px);
+}
+
+.passport-section .profile-fill {
+  background: var(--coral-deep);
+}
+
+.passport-section .profile-shade {
+  background: rgb(255 240 201 / 72%);
+}
+
+.passport-section .col-stats {
+  border-top: 1px solid rgb(16 42 75 / 38%);
+  justify-content: space-between;
+  margin-left: 0;
+  padding-top: 15px;
+}
+
+.passport-section .col-stats span,
+.passport-section .col-stats strong,
+.passport-section .featured .col-stats span,
+.passport-section .featured .col-stats strong {
+  color: inherit;
+}
+
+/* Chapter 05 / last call. */
+
+.closing-broadcast {
+  --departure-copy: 0;
+  --departure-copy-x: -70px;
+  --departure-image-scale: 1;
+  --departure-image-x: 0%;
+  --ticket-turn: 8deg;
+  --train-x: -118vw;
+  --wheel-turn: 0deg;
+  background: var(--paper);
+  display: block;
+  height: 260vh;
+  min-height: 0;
+  padding: 0;
+  position: relative;
+}
+
+.closing-sticky {
+  display: grid;
+  grid-template-columns: 45% 55%;
+  height: 100svh;
+  overflow: hidden;
+  position: sticky;
+  top: 0;
+}
+
+.closing-sticky > img {
+  grid-column: 2;
+  grid-row: 1;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  transform: translate3d(var(--departure-image-x), 0, 0) scale(var(--departure-image-scale));
+  transform-origin: center;
+  will-change: transform;
+  width: 100%;
+}
+
+.closing-copy {
+  align-content: center;
+  background: var(--paper);
+  display: grid;
+  grid-column: 1;
+  grid-row: 1;
+  padding: clamp(50px, 7vw, 112px);
+  position: relative;
+  opacity: max(.08, var(--departure-copy));
+  transform: translate3d(var(--departure-copy-x), 0, 0);
+  will-change: opacity, transform;
+  z-index: 2;
+}
+
+.closing-copy .eyebrow {
+  grid-column: auto;
+  margin-bottom: 22px;
+}
+
+.closing-copy h2 {
+  color: var(--ink-deep);
+  font-size: clamp(68px, 7.2vw, 116px);
+}
+
+.closing-copy h2 em {
+  color: var(--coral-deep);
+}
+
+.closing-copy > p:not(.eyebrow) {
+  border-top: 2px solid var(--ink-deep);
+  color: var(--ink-deep);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  line-height: 1.55;
+  margin: 42px 0 28px;
+  max-width: 390px;
+  padding-top: 22px;
+}
+
+.closing-copy .button {
+  grid-column: auto;
+  justify-self: start;
+}
+
+.closing-ticket {
+  align-items: center;
+  background: var(--sun);
+  bottom: 46px;
+  color: var(--ink-deep);
+  display: grid;
+  gap: 12px;
+  grid-template-columns: auto auto auto;
+  padding: 16px 20px 13px;
+  position: absolute;
+  right: 45px;
+  transform: rotate(var(--ticket-turn));
+  transform-origin: center;
+  will-change: transform;
+  z-index: 9;
+}
+
+.closing-ticket span {
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 32px;
+  letter-spacing: -.03em;
+}
+
+.closing-ticket i {
+  color: var(--coral-deep);
+  font-style: normal;
+}
+
+.closing-ticket small {
+  border-top: 1px solid var(--ink-deep);
+  font-size: 8px;
+  font-weight: 900;
+  grid-column: 1 / -1;
+  letter-spacing: .14em;
+  padding-top: 7px;
+  text-align: center;
+}
+
+.departure-track {
+  bottom: 8%;
+  height: 108px;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  z-index: 8;
+}
+
+.departure-track::before,
+.departure-track::after {
+  background: var(--ink-deep);
+  bottom: 0;
+  content: "";
+  height: 4px;
+  left: 0;
+  position: absolute;
+  right: 0;
+}
+
+.departure-track::after {
+  background: repeating-linear-gradient(90deg, transparent 0 32px, var(--ink-deep) 32px 44px, transparent 44px 66px);
+  bottom: -11px;
+  height: 8px;
+  transform: skewX(-26deg);
+}
+
+.departing-train {
+  background: var(--ink-deep);
+  border: 4px solid var(--cream);
+  bottom: 4px;
+  box-shadow: 10px 10px 0 rgb(7 30 59 / 28%);
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(5, minmax(42px, 1fr));
+  height: 92px;
+  left: max(24px, calc(50% - 340px));
+  padding: 39px 26px 15px;
+  position: absolute;
+  transform: translate3d(var(--train-x), 0, 0);
+  width: min(680px, calc(100vw - 48px));
+  will-change: transform;
+}
+
+.departing-train::before {
+  background: var(--coral);
+  border-bottom: 22px solid var(--cream);
+  border-right: 16px solid transparent;
+  border-top: 22px solid var(--cream);
+  content: "";
+  height: 0;
+  position: absolute;
+  right: -20px;
+  top: 20px;
+  width: 4px;
+}
+
+.departing-train::after {
+  background: var(--sun);
+  border: 3px solid var(--ink-deep);
+  border-radius: 50%;
+  content: "";
+  height: 14px;
+  position: absolute;
+  right: -13px;
+  top: 39px;
+  width: 14px;
+}
+
+.departing-train b {
+  color: var(--sun);
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 20px;
+  left: 25px;
+  letter-spacing: .08em;
+  line-height: 1;
+  position: absolute;
+  top: 10px;
+}
+
+.departing-train span {
+  background: var(--pool);
+  border: 2px solid var(--cream);
+  min-width: 0;
+}
+
+.departing-train i {
+  background: conic-gradient(var(--coral) 0 12%, var(--sun) 12% 20%, var(--coral) 20% 62%, var(--sun) 62% 70%, var(--coral) 70% 100%);
+  border: 4px solid var(--ink-deep);
+  border-radius: 50%;
+  bottom: -16px;
+  height: 27px;
+  position: absolute;
+  transform: rotate(var(--wheel-turn));
+  will-change: transform;
+  width: 27px;
+}
+
+.departing-train i:first-of-type {
+  left: 86px;
+}
+
+.departing-train i:last-of-type {
+  right: 86px;
+}
+
+.ullaub-world .footer {
+  background: var(--coral);
+  border: 0;
+  color: var(--ink-deep);
+  display: block;
+  padding: 0;
+}
+
+.ullaub-world .footer .shell {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 24px;
+  padding-top: 24px;
+}
+
+@keyframes check-in-arrival {
+  from {
+    opacity: 0;
+    scale: .82;
+    translate: 0 70px;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes strip-unroll {
+  from {
+    clip-path: inset(0 50%);
+    opacity: .15;
+    translate: 0 42px;
+  }
+  to {
+    clip-path: inset(0);
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .journey-checkpoints a,
+  .passport-section .col-card {
+    animation: check-in-arrival linear both;
+    animation-range: entry 4% cover 24%;
+    animation-timeline: view(block);
+  }
+
+  .journey-checkpoints a:nth-child(2),
+  .passport-section .col-card:nth-child(3n + 2) {
+    animation-range: entry 10% cover 31%;
+  }
+
+  .journey-checkpoints a:nth-child(3),
+  .passport-section .col-card:nth-child(3n) {
+    animation-range: entry 16% cover 38%;
+  }
+
+  .journey-checkpoints a:nth-child(4) {
+    animation-range: entry 22% cover 44%;
+  }
+
+  .stage-run,
+  .room-service-head,
+  .room-service .basecamp-options {
+    animation: strip-unroll linear both;
+    animation-range: entry 2% cover 28%;
+    animation-timeline: view(block);
+  }
+
+  .room-service .basecamp-options {
+    animation-range: entry 10% cover 36%;
+  }
+
+}
+
+@media (max-width: 1080px) {
+  .route-heading,
+  .roadbook-masthead {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .route-heading .section-copy,
+  .roadbook-masthead > p:last-child {
+    grid-column: 2;
+    max-width: 560px;
+  }
+
+  .stage-run {
+    grid-template-columns: minmax(0, 1fr) 140px minmax(0, 1fr);
+  }
+
+  .stage-day-group button small {
+    display: none;
+  }
+
+  .stage-day-group button {
+    min-height: 94px;
+  }
+
+  .rest-stamp strong {
+    font-size: 20px;
+  }
+
+  .room-service {
+    grid-template-columns: minmax(210px, .48fr) minmax(380px, 1fr);
+  }
+
+  .room-service-head {
+    grid-column: 1 / -1;
+  }
+
+  .col-passport {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 780px) {
+  .hero-broadcast .nav-links {
+    display: none;
+  }
+
+  .tour-assembly {
+    height: 255vh;
+  }
+
+  .assembly-sticky {
+    padding: 24px 16px 22px;
+  }
+
+  .assembly-topline span:last-child {
+    display: none;
+  }
+
+  .assembly-frame {
+    aspect-ratio: auto;
+    height: 66svh;
+    max-height: none;
+  }
+
+  .assembly-panel img {
+    object-position: 30% 50%;
+  }
+
+  .assembly-copy {
+    bottom: 18px;
+    left: 16px;
+    right: 16px;
+  }
+
+  .assembly-copy h2 {
+    font-size: clamp(31px, 8.5vw, 56px);
+  }
+
+  .assembly-copy strong {
+    font-size: 13px;
+  }
+
+  .assembly-instruction {
+    font-size: 7px;
+  }
+
+  .tour-progress {
+    right: 6px;
+  }
+
+  .route-heading,
+  .roadbook-masthead {
+    align-items: start;
+    grid-template-columns: 72px minmax(0, 1fr);
+  }
+
+  .chapter-number {
+    font-size: 76px;
+  }
+
+  .route-heading .section-copy,
+  .roadbook-masthead > p:last-child {
+    grid-column: 1 / -1;
+    margin-left: 72px;
+  }
+
+  .route-stage {
+    display: grid;
+    gap: 28px;
+    min-height: 0;
+  }
+
+  .route-stage .map-frame {
+    height: 520px;
+    width: 100%;
+  }
+
+  .route-annotation {
+    bottom: 110px;
+    right: 5%;
+  }
+
+  .journey-checkpoints {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .journey-checkpoints a:nth-child(2) {
+    border-right: 0;
+  }
+
+  .journey-checkpoints a:nth-child(-n + 2) {
+    border-bottom: 2px solid var(--ink-deep);
+  }
+
+  .stage-run {
+    border: 0;
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 16px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .stage-day-group {
+    display: flex;
+    flex: 0 0 auto;
+  }
+
+  .stage-day-group button {
+    border-bottom: 1px solid rgb(255 240 201 / 38%);
+    border-top: 1px solid rgb(255 240 201 / 38%);
+    min-width: 75px;
+    scroll-snap-align: start;
+  }
+
+  .rest-stamp {
+    flex: 0 0 130px;
+  }
+
+  .stage-spread {
+    grid-template-columns: 1fr;
+  }
+
+  .stage-portrait {
+    height: min(760px, 105vw);
+  }
+
+  .stage-roadbook .stage-detail {
+    border-left: 0;
+    border-top: 3px solid var(--coral);
+    min-height: 0;
+    padding: 42px 0 0;
+  }
+
+  .stage-rider {
+    top: 170px;
+  }
+
+  .stage-rider b {
+    display: none;
+  }
+
+  .carb-loader {
+    height: 280vh;
+  }
+
+  .carb-title {
+    font-size: 30vw;
+    left: 2vw;
+    top: 14%;
+  }
+
+  .croissant-rocket {
+    height: 172px;
+    left: calc(50% - 81px);
+    top: 42%;
+    width: 162px;
+  }
+
+  .coffee-orbit {
+    height: 166px;
+    left: calc(50% - 83px);
+    top: 43%;
+    width: 166px;
+  }
+
+  .croissant-rocket span,
+  .coffee-orbit span {
+    font-size: 74px;
+  }
+
+  .croissant-rocket b,
+  .coffee-orbit b {
+    font-size: 22px;
+  }
+
+  .bike-zoom span {
+    font-size: 150px;
+  }
+
+  .bike-zoom {
+    left: calc(50% - 75px);
+    top: 46%;
+  }
+
+  .pool-ring {
+    border-width: 17px;
+    height: 190px;
+    left: calc(50% - 95px);
+    top: calc(50% - 95px);
+    width: 190px;
+  }
+
+  .pool-ring span {
+    font-size: 58px;
+  }
+
+  .carb-finale {
+    border-width: 5px;
+    box-shadow: 10px 10px 0 var(--pool-deep);
+    inset: 8% 18px;
+    padding: 28px 16px;
+  }
+
+  .carb-finale h2 {
+    font-size: 24vw;
+  }
+
+  .carb-finale strong {
+    margin-top: 27px;
+  }
+
+  .resort-scene {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .resort-scene figure {
+    grid-column: 1;
+    grid-row: 1;
+    height: min(910px, 130vw);
+  }
+
+  .resort-title {
+    align-content: start;
+    background: var(--sun);
+    grid-column: 1;
+    grid-row: 2;
+    padding: 58px 32px 68px;
+  }
+
+  .resort-title::after {
+    border-bottom: 28px solid var(--sun);
+    border-left: 28px solid transparent;
+    border-right: 28px solid transparent;
+    border-top: 0;
+    left: 48px;
+    right: auto;
+    top: -27px;
+  }
+
+  .pool-sign {
+    height: 108px;
+    right: 22px;
+    top: 22px;
+    width: 108px;
+  }
+
+  .pool-sign b {
+    font-size: 27px;
+  }
+
+  .room-service {
+    grid-template-columns: 1fr;
+    padding-bottom: 90px;
+    padding-top: 90px;
+  }
+
+  .room-service-head {
+    grid-column: 1;
+  }
+
+  .room-service .basecamp-detail {
+    border-left: 0;
+    border-top: 3px solid var(--sun);
+    padding: 42px 0 0;
+  }
+
+  .cols-intro {
+    grid-template-columns: 1fr;
+    padding-bottom: 90px;
+    padding-top: 100px;
+  }
+
+  .cols-intro figure,
+  .cols-elevation {
+    height: min(760px, 112vw);
+    width: calc(100% - 24px);
+  }
+
+  .closing-broadcast {
+    height: 245vh;
+  }
+
+  .closing-sticky {
+    grid-template-columns: 1fr;
+    grid-template-rows: 58% 42%;
+  }
+
+  .closing-sticky > img {
+    grid-column: 1;
+    grid-row: 1;
+    height: 100%;
+  }
+
+  .closing-copy {
+    grid-column: 1;
+    grid-row: 2;
+    padding: 36px 32px 64px;
+  }
+
+  .closing-ticket {
+    bottom: auto;
+    right: 22px;
+    top: 24px;
+  }
+
+  .departure-track {
+    bottom: calc(42% - 10px);
+  }
+}
+
+@media (max-width: 560px) {
+  .ullaub-world .shell {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .route-broadcast {
+    padding-top: 86px;
+  }
+
+  .assembly-topline {
+    margin-bottom: 14px;
+  }
+
+  .assembly-frame {
+    height: 65svh;
+  }
+
+  .assembly-copy {
+    align-items: start;
+    grid-template-columns: 1fr;
+    padding: 13px 14px 12px;
+  }
+
+  .assembly-copy h2 {
+    gap: 8px;
+  }
+
+  .assembly-copy strong {
+    justify-self: start;
+    margin-top: 8px;
+  }
+
+  .assembly-instruction {
+    max-width: 280px;
+    text-align: center;
+  }
+
+  .route-heading,
+  .roadbook-masthead {
+    gap: 19px;
+    grid-template-columns: 52px minmax(0, 1fr);
+    padding-bottom: 52px;
+  }
+
+  .chapter-number {
+    font-size: 55px;
+  }
+
+  .route-heading h2,
+  .roadbook-masthead h2,
+  .resort-title h2,
+  .cols-intro h2,
+  .closing-copy h2 {
+    font-size: clamp(51px, 16vw, 76px);
+  }
+
+  .route-heading .section-copy,
+  .roadbook-masthead > p:last-child {
+    font-size: 15px;
+    margin-left: 52px;
+  }
+
+  .route-stage .map-frame {
+    height: 450px;
+  }
+
+  .route-broadcast .map-key span:last-child {
+    display: none;
+  }
+
+  .route-annotation {
+    display: none;
+  }
+
+  .journey-checkpoints a {
+    min-height: 112px;
+    padding: 18px 16px;
+  }
+
+  .stage-roadbook {
+    padding-bottom: 95px;
+    padding-top: 95px;
+  }
+
+  .stage-spread {
+    padding-top: 60px;
+  }
+
+  .stage-portrait {
+    border-width: 7px;
+    height: 126vw;
+  }
+
+  .stage-roadbook .stage-detail h3 {
+    font-size: 50px;
+    margin: 42px 0 34px;
+  }
+
+  .stage-roadbook .big-numbers b {
+    font-size: 40px;
+  }
+
+  .carb-channel {
+    font-size: 7px;
+    letter-spacing: .11em;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .carb-title em {
+    margin-left: .15em;
+  }
+
+  .carb-finale p {
+    font-size: 7px;
+    margin-bottom: 18px;
+  }
+
+  .carb-finale strong {
+    font-size: 15px;
+    padding: 9px 11px;
+  }
+
+  .resort-scene figure {
+    height: 143vw;
+  }
+
+  .resort-title {
+    padding: 52px 24px 64px;
+  }
+
+  .room-service {
+    padding-bottom: 75px;
+    padding-top: 75px;
+  }
+
+  .room-service .basecamp-big-numbers {
+    gap: 12px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .room-service .basecamp-big-numbers b {
+    font-size: 29px;
+  }
+
+  .room-service .basecamp-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .passport-section {
+    padding-bottom: 90px;
+  }
+
+  .cols-intro {
+    padding-top: 80px;
+  }
+
+  .cols-intro figure,
+  .cols-elevation {
+    border-width: 7px;
+    height: 132vw;
+  }
+
+  .col-bars {
+    gap: 2px;
+    padding: 0 16px 18px;
+  }
+
+  .elevation-caption {
+    left: 18px;
+    top: 20px;
+  }
+
+  .elevation-caption strong {
+    font-size: 88px;
+  }
+
+  .elevation-caption span {
+    font-size: 22px;
+  }
+
+  .cols-intro .section-copy {
+    font-size: 15px;
+    margin-top: 36px;
+  }
+
+  .col-passport {
+    gap: 26px;
+    grid-template-columns: 1fr;
+  }
+
+  .passport-section .col-card,
+  .passport-section .col-card.featured {
+    grid-column: 1;
+    margin-top: 0;
+    transform: none;
+  }
+
+  .passport-section .col-card-head b {
+    font-size: 29px;
+  }
+
+  .closing-copy {
+    padding: 28px 24px 55px;
+  }
+
+  .closing-copy > p:not(.eyebrow) {
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 18px 0 15px;
+    padding-top: 12px;
+  }
+
+  .closing-ticket {
+    padding: 12px 15px 10px;
+  }
+
+  .closing-ticket span {
+    font-size: 25px;
+  }
+
+  .departing-train {
+    gap: 6px;
+    grid-template-columns: repeat(5, minmax(26px, 1fr));
+    height: 74px;
+    left: 22px;
+    padding: 32px 17px 12px;
+    width: calc(100vw - 72px);
+  }
+
+  .departing-train b {
+    font-size: 15px;
+    left: 16px;
+    top: 8px;
+  }
+
+  .departing-train i:first-of-type {
+    left: 48px;
+  }
+
+  .departing-train i:last-of-type {
+    right: 48px;
+  }
+
+  .ullaub-world .footer .shell {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .ullaub-world .footer span {
+    font-size: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carb-loader {
+    height: 100svh;
+  }
+
+  .carb-title,
+  .croissant-rocket,
+  .coffee-orbit,
+  .bike-zoom,
+  .pool-ring,
+  .stage-rider {
+    display: none;
+  }
+
+  .carb-finale {
+    opacity: 1;
+    transform: rotate(-1deg);
+  }
+
+  .route-broadcast .stage-marker,
+  .journey-checkpoints a,
+  .stage-day-group button,
+  .passport-section .col-card {
+    transition: none;
+  }
+
+  .tour-progress span {
+    transition: none;
+  }
+
+  .hero-broadcast .hero-title-lockup,
+  .hero-broadcast .hero-media,
+  .route-heading,
+  .route-stage .map-frame,
+  .stage-run,
+  .stage-portrait,
+  .stage-roadbook .stage-detail,
+  .resort-scene figure img,
+  .resort-title,
+  .pool-sign,
+  .room-service-head,
+  .room-service .basecamp-options,
+  .room-service .basecamp-detail,
+  .cols-elevation,
+  .col-bars span,
+  .journey-checkpoints a,
+  .passport-section .col-card,
+  .closing-sticky > img,
+  .closing-copy,
+  .closing-ticket,
+  .departing-train {
+    animation: none !important;
+    transition: none !important;
+  }
+}
